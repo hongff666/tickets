@@ -1,8 +1,8 @@
-const TicketPage = async ({
-  params,
-}: {
+type TicketPagePropsType = {
   params: Promise<{ ticketId: string }>;
-}) => {
+};
+
+const TicketPage = async ({ params }: TicketPagePropsType) => {
   // 获取ticketId参数
   const ticketId = (await params).ticketId;
 
@@ -12,4 +12,5 @@ const TicketPage = async ({
     </div>
   );
 };
+
 export default TicketPage;
