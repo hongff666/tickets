@@ -1,5 +1,5 @@
 export const initialTickets: Array<{
-  id: number;
+  id: string;
   title: string;
   content: string;
   status: string;
@@ -7,7 +7,7 @@ export const initialTickets: Array<{
   updatedAt: Date;
 }> = [
   {
-    id: 1,
+    id: "1",
     title: "Ticket 1",
     content: "This is the content of ticket 1",
     status: "open",
@@ -15,7 +15,7 @@ export const initialTickets: Array<{
     updatedAt: new Date("2023-10-02"),
   },
   {
-    id: 2,
+    id: "2",
     title: "Ticket 2",
     content: "This is the content of ticket 2",
     status: "closed",
@@ -23,7 +23,7 @@ export const initialTickets: Array<{
     updatedAt: new Date("2023-10-04"),
   },
   {
-    id: 3,
+    id: "3",
     title: "Ticket 3",
     content: "This is the content of ticket 3",
     status: "in-progress",

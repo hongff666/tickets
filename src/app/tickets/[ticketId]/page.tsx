@@ -10,7 +10,7 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
 
   // 更具ticketId获取ticket数据
   const ticket = initialTickets.find(
-    (ticket) => ticket.id === Number(ticketId)
+    (ticket) => ticket.id === ticketId
   );
 
   if (ticket) {

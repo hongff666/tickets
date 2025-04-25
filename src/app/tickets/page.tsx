@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { initialTickets } from "@/data";
+import { ticketPath } from "@/paths";
 
 const TicketsPage = () => {
   const tickets = initialTickets;
@@ -12,7 +13,7 @@ const TicketsPage = () => {
           <div key={ticket.id} className="border-2 border-gray-300 p-4 rounded-md shadow-md">
             <h2>{ticket.title}</h2>
             <p>{ticket.content}</p>
-            <Link href={`/tickets/${ticket.id}`} className="underline">
+            <Link href={ticketPath(ticket.id)} className="underline">
               detail
             </Link>
           </div>
