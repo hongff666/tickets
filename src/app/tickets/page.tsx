@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Link from "next/link";
 
 import { initialTickets } from "@/data";
@@ -11,22 +12,33 @@ const TICKET_ICONS = {
 
 const TicketsPage = () => {
   return (
-    <div>
-      {initialTickets.map((ticket) => {
-        return (
-          <div
-            key={ticket.id}
-            className="border-2 border-gray-300 p-4 rounded-md shadow-md mb-2"
-          >
-            <h2>{ticket.title}</h2>
-            <p>{TICKET_ICONS[ticket.status]}</p>
-            <p>{ticket.content}</p>
-            <Link href={ticketPath(ticket.id)} className="underline">
-              detail
-            </Link>
-          </div>
-        );
-      })}
+    <div className="flex-1 flex flex-col gap-y-8">
+      <div>
+        <h2 className="text-3xl font-bold tracking-tight">Tickets Page</h2>
+        <p className="text-sm text-muted-foreground">
+          All your tickets in one place.
+        </p>
+      </div>
+
+      <div className="flex-1 flex flex-col items-center gap-y-4">
+        {initialTickets.map((ticket) => {
+          return (
+            <div key={ticket.id} className="w-full max-w-[420px] p-4 border border-slate-500 rounded">
+              <h3 className="text-lg font-semibold truncate">{ticket.title}</h3>
+              <p className={clsx("text-sm text-slate-500 truncate",{
+                "line-through": ticket.status === "DONE", 
+              })}>
+                {ticket.content + ticket.content + ticket.content}
+              </p>
+              <p>{TICKET_ICONS[ticket.status]}</p>
+
+              <Link href={ticketPath(ticket.id)} className="underline">
+                view
+              </Link>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
