@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PlaceHolder } from "@/components/placeholder";
 import { Button } from "@/components/ui/button";
 import { initialTickets } from "@/data";
+import { TicketItem } from "@/features/ticket/components/ticket-item";
 import { ticketsPath } from "@/paths";
 
 type TicketPagePropsType = {
@@ -18,12 +19,8 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
 
   if (ticket) {
     return (
-      <div className="border-2 border-gray-300 p-4 rounded-md shadow-md">
-        <h2 className="text-lg">{ticket.title}</h2>
-        <p>{ticket.content}</p>
-        <p>{ticket.createdAt.toISOString()}</p>
-        <p>{ticket.updatedAt.toISOString()}</p>
-        <p>{ticket.status}</p>
+      <div className="flex flex-col items-center animate-fade-in-from-top">
+        <TicketItem ticket={ticket} isDetail />
       </div>
     );
   } else {
