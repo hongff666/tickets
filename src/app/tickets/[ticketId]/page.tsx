@@ -2,8 +2,8 @@ import Link from "next/link";
 
 import { PlaceHolder } from "@/components/placeholder";
 import { Button } from "@/components/ui/button";
-import { initialTickets } from "@/data";
 import { TicketItem } from "@/features/ticket/components/ticket-item";
+import { getTicket } from "@/features/ticket/queries/get-ticket";
 import { ticketsPath } from "@/paths";
 
 type TicketPagePropsType = {
@@ -15,7 +15,7 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
   const ticketId = (await params).ticketId;
 
   // 根据ticketId获取ticket数据
-  const ticket = initialTickets.find((ticket) => ticket.id === ticketId);
+  const ticket = await getTicket(ticketId);
 
   if (ticket) {
     return (
