@@ -18,7 +18,6 @@ const PlaceHolder = ({
         className: "h-16 w-16",
       })}
       <h1 className="text-2xl font-bold">{label}</h1>
-      <p className="mt-4 text-gray-500">Please wait while we fetch the data.</p>
       {cloneElement(button, {
         className: "h-10",
       })}
