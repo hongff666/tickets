@@ -23,11 +23,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const seed = async () => {
+  const t0 = performance.now();
   await prisma.ticket.deleteMany();
 
   await prisma.ticket.createMany({
     data: tickets,
   });
+
+  const t1 = performance.now();
+  console.log(`Seed completed in ${t1 - t0} milliseconds.`);
 };
 
 seed();
