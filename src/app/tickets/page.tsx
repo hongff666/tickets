@@ -1,6 +1,8 @@
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { Heading } from "@/components/heading";
+import { PlaceHolder } from "@/components/placeholder";
 import { Spinner } from "@/components/spinner";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 
@@ -12,9 +14,11 @@ const TicketsPage = async () => {
         description="All your tickets in one place."
       />
 
-      <Suspense fallback={<Spinner />}>
-        <TicketList />
-      </Suspense>
+      <ErrorBoundary fallback={<PlaceHolder label="something went wrong" />}>
+        <Suspense fallback={<Spinner />}>
+          <TicketList />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };
