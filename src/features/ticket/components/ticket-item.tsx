@@ -1,4 +1,3 @@
-import { Ticket } from "@prisma/client";
 import clsx from "clsx";
 import { LucideExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -8,13 +7,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ticketPath } from "@/paths";
 
 import { TICKET_ICONS } from "../constants";
+import { getTicket } from "../queries/get-ticket";
+import { getTickets } from "../queries/get-tickets";
 
 type TicketItemProps = {
-  ticket: Ticket;
+  ticket:
+    | Awaited<ReturnType<typeof getTickets>>[number]
+    | Awaited<ReturnType<typeof getTicket>>;
   isDetail?: boolean;
 };
 
 const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
+  if (!ticket) {
+    return null;
+  }
+
   const detailButton = (
     <Button asChild variant="outline" size="icon">
       <Link href={ticketPath(ticket.id)}>
@@ -22,6 +29,7 @@ const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
       </Link>
     </Button>
   );
+
   return (
     <div
       className={clsx("w-full  flex gap-x-1", {
