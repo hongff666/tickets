@@ -7,6 +7,6 @@ type Ticket = {
   updatedAt?: Date;
 };
 
-type TicketStatus = "OPEN" | "IN-PROGRESS" | "DONE";
+type TicketStatus = "OPEN" | "IN_PROGRESS" | "CLOSED";
 
 export type { Ticket, TicketStatus };

@@ -6,8 +6,8 @@ import {
 
 const TICKET_ICONS = {
   OPEN: <LucideFileText />,
-  DONE: <LucideCircleCheck />,
-  "IN-PROGRESS": <LucideNotebookPen />,
+  CLOSED: <LucideCircleCheck />,
+  IN_PROGRESS: <LucideNotebookPen />,
 };
 
 export { TICKET_ICONS };
