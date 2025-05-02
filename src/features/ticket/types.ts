@@ -3,8 +3,8 @@ type Ticket = {
   title: string;
   content: string;
   status: TicketStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 type TicketStatus = "OPEN" | "IN-PROGRESS" | "DONE";
