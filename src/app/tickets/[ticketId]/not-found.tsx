@@ -1,6 +1,4 @@
-
-
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 import { PlaceHolder } from "@/components/placeholder";
 import { Button } from "@/components/ui/button";
