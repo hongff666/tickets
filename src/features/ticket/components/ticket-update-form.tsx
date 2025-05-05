@@ -10,8 +10,10 @@ import { updateTicket } from "../actions/update-ticket";
 
 export const TicketUpdateForm = ({ ticket }: { ticket: Ticket }) => {
   return (
-    <Form action={updateTicket} className="flex flex-col gap-y-4">
-      <input type="hidden" name="id" defaultValue={ticket.id} />
+    <Form
+      action={updateTicket.bind(null, ticket.id)}
+      className="flex flex-col gap-y-4"
+    >
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"

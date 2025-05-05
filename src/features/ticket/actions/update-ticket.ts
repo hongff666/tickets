@@ -5,15 +5,14 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ticketPath, ticketsPath } from "@/paths";
 
-export const updateTicket = async (formData: FormData) => {
+export const updateTicket = async (ticketId: string, formData: FormData) => {
   const data = {
-    id: formData.get("id"),
     title: formData.get("title"),
     content: formData.get("content"),
   };
 
   await prisma.ticket.update({
-    where: { id: data.id as string },
+    where: { id: ticketId },
     data: {
       title: data.title as string,
       content: data.content as string,
@@ -21,6 +20,6 @@ export const updateTicket = async (formData: FormData) => {
   });
 
   revalidatePath(ticketsPath());
-  revalidatePath(ticketPath(data.id as string));
+  revalidatePath(ticketPath(ticketId));
   redirect(ticketsPath());
 };
