@@ -1,6 +1,7 @@
 import { Ticket } from "@prisma/client";
 import clsx from "clsx";
 import { LucideExternalLink, LucideTrash } from "lucide-react";
+import Form from "next/form";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -25,11 +26,11 @@ const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
   );
 
   const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
+    <Form action={deleteTicket.bind(null, ticket.id)}>
       <Button variant="outline" size="icon">
         <LucideTrash className="w-4 h-4" />
       </Button>
-    </form>
+    </Form>
   );
 
   return (
