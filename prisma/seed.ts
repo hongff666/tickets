@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 let index = 0;
 
-export const tickets = Array.from({ length: 20 }, () => ({
+export const tickets = Array.from({ length: 3 }, () => ({
   title: `${index++}: ${faker.lorem.sentence()}`,
   content: faker.lorem.paragraph(),
   status: faker.helpers.arrayElement([
