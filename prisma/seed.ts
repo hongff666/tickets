@@ -2,8 +2,10 @@ import { faker } from "@faker-js/faker";
 import { TicketStatus } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 
+let index = 0;
+
 export const tickets = Array.from({ length: 20 }, () => ({
-  title: faker.lorem.sentence(),
+  title: `${index++}: ${faker.lorem.sentence()}`,
   content: faker.lorem.paragraph(),
   status: faker.helpers.arrayElement([
     TicketStatus.OPEN,
