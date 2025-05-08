@@ -19,7 +19,7 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
   const [formState, formAction] = useActionState(
     upsertTicket.bind(null, ticket?.id),
     {
-      message: ""
+      message: "",
     }
   );
   return (
@@ -30,17 +30,21 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
         name="title"
         type="text"
         className="w-full"
-        defaultValue={ticket?.title}
+        defaultValue={
+          (formState.payload?.get("title") as string) ?? ticket?.title
+        }
       />
-      {formState.error?.title}
+      <span>{formState.fieldErrors?.title}</span>
       <Label htmlFor="content">Content</Label>
       <Textarea
         id="content"
         name="content"
         className="w-full"
-        defaultValue={ticket?.content}
+        defaultValue={
+          (formState.payload?.get("content") as string) ?? ticket?.content
+        }
       />
-      {formState.error?.content}
+      <span>{formState.fieldErrors?.content}</span>
       <SubmitButton label={ticket ? "Update" : "Create"} />
 
       {formState.message}

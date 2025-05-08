@@ -3,6 +3,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+import {
+  ActionState,
+  fromToActionState,
+} from "@/components/form/utils/to-action-state";
 import { prisma } from "@/lib/prisma";
 import { ticketPath, ticketsPath } from "@/paths";
 
@@ -11,22 +15,11 @@ const ticketSchema = z.object({
   content: z.string().min(1, "Content is required"),
 });
 
-/**
- * 异步函数，用于创建或更新票据数据。
- *
- * @param ticketId - 票据的唯一标识符，如果未提供则创建新票据。
- * @param _actionState - 包含消息和错误信息的状态对象。
- * @param formData - 包含表单数据的 FormData 对象。
- * @returns 包含操作结果消息和错误信息的对象。
- */
 export const upsertTicket = async (
   ticketId: string | undefined,
-  _actionState: {
-    message: string;
-    error?: Record<string, string>;
-  },
+  _actionState: ActionState,
   formData: FormData
-) => {
+): Promise<ActionState> => {
   try {
     // 使用 Zod 验证表单数据的格式和必填字段
     const data = ticketSchema.parse({
@@ -41,19 +34,7 @@ export const upsertTicket = async (
       create: data, // 创建时使用解析后的数据
     });
   } catch (error) {
-    // 捕获错误并处理, 如果是 ZodError，则提取错误信息, 否则返回数据库错误
-    if (error instanceof z.ZodError) {
-      const errors = error.errors.reduce((acc, curr) => {
-        const field = curr.path[0];
-        const message = curr.message;
-        acc[field] = message;
-        return acc;
-      }, {} as Record<string, string>);
-
-      return { message: "Validation errors", error: errors };
-    } else {
-      return { message: (error as Error).message };
-    }
+    return fromToActionState(error, formData); // 如果发生错误，返回错误信息和表单数据
   }
 
   // 如果 ticketId 存在，则重定向到更新后的票据页面；否则重定向到票据列表页面
