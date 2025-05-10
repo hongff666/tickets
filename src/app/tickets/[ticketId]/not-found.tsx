@@ -1,8 +1,8 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { PlaceHolder } from "@/components/placeholder";
-import { Button } from "@/components/ui/button";
-import { ticketsPath } from "@/paths";
+import { PlaceHolder } from '@/components/placeholder'
+import { Button } from '@/components/ui/button'
+import { ticketsPath } from '@/paths'
 
 export default function NotFound() {
   return (
@@ -14,5 +14,5 @@ export default function NotFound() {
         </Button>
       }
     />
-  );
+  )
 }

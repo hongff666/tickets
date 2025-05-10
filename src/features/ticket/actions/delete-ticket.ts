@@ -1,17 +1,17 @@
-"use server";
+'use server'
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
-import { prisma } from "@/lib/prisma";
-import { ticketPath, ticketsPath } from "@/paths";
+import { prisma } from '@/lib/prisma'
+import { ticketPath, ticketsPath } from '@/paths'
 
 export const deleteTicket = async (ticketId: string) => {
   await prisma.ticket.delete({
     where: { id: ticketId },
-  });
+  })
 
-  revalidatePath(ticketsPath());
-  revalidatePath(ticketPath(ticketId));
-  redirect(ticketsPath());
-};
+  revalidatePath(ticketsPath())
+  revalidatePath(ticketPath(ticketId))
+  redirect(ticketsPath())
+}

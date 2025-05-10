@@ -5,15 +5,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from './ui/card'
 
 type CardCompactProps = {
-  title: string;
-  description: string;
-  content: React.ReactNode;
-  className?: string;
-  footer?: React.ReactNode;
-};
+  title: string
+  description: string
+  content: React.ReactNode
+  className?: string
+  footer?: React.ReactNode
+}
 
 export const CardCompact = ({
   title,
@@ -31,5 +31,5 @@ export const CardCompact = ({
       <CardContent>{content}</CardContent>
       {footer && <CardFooter>{footer}</CardFooter>}
     </Card>
-  );
-};
+  )
+}

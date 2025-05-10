@@ -26,24 +26,28 @@ TicketBounty 是一个基于 [Next.js](https://nextjs.org/) 的票据管理系�
 ## 安装步骤
 
 1. 克隆项目到本地：
+
    ```bash
    git clone <repository-url>
    cd tickets
    ```
 
 2. 安装依赖：
+
    ```bash
    npm install
    ```
 
 3. 配置环境变量：
    在项目根目录创建 `.env` 文件，并添加以下内容：
+
    ```env
    DATABASE_URL=your_database_url
    DIRECT_URL=your_direct_database_url
    ```
 
 4. 初始化数据库：
+
    ```bash
    npx prisma migrate dev
    ```
@@ -56,6 +60,7 @@ TicketBounty 是一个基于 [Next.js](https://nextjs.org/) 的票据管理系�
 ## 启动项目
 
 - 开发模式：
+
   ```bash
   npm run dev
   ```
@@ -100,4 +105,3 @@ npm run type
 ## 许可证
 
 本项目采用 [MIT License](https://opensource.org/licenses/MIT) 许可证。
-

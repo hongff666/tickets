@@ -1,23 +1,23 @@
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation'
 
-import { CardCompact } from "@/components/card-compact";
-import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
-import { getTicket } from "@/features/ticket/queries/get-ticket";
+import { CardCompact } from '@/components/card-compact'
+import { TicketUpsertForm } from '@/features/ticket/components/ticket-upsert-form'
+import { getTicket } from '@/features/ticket/queries/get-ticket'
 
 export default async function EditTicketPage({
   params,
 }: {
-  params: Promise<{ ticketId: string }>;
+  params: Promise<{ ticketId: string }>
 }) {
-  const { ticketId } = await params;
-  const ticket = await getTicket(ticketId);
+  const { ticketId } = await params
+  const ticket = await getTicket(ticketId)
 
   if (!ticket) {
-    notFound();
+    notFound()
   }
 
   return (
-    <div className="flex-1 flex items-center justify-center">
+    <div className="flex flex-1 items-center justify-center">
       <CardCompact
         title="Edit Ticket"
         description="Please provide the details of the ticket."
@@ -25,5 +25,5 @@ export default async function EditTicketPage({
         className="w-full max-w-[420px] self-center"
       />
     </div>
-  );
+  )
 }

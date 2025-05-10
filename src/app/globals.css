@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -45,7 +45,6 @@
 
 @theme {
   --animate-fade-in-from-top: fade-in-from-top 0.5s ease-in-out;
- 
 
   @keyframes fade-in-from-top {
     0% {
@@ -127,7 +126,6 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.646 0.222 41.116);
 }
-
 
 @layer base {
   * {
