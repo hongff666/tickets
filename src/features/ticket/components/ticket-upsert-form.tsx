@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
+import { FieldError } from '@/components/form/field-error'
 import { upsertTicket } from '../actions/upsert-ticket'
 
 type TicketUpsertProps = {
@@ -34,9 +35,7 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
           (formState.payload?.get('title') as string) ?? ticket?.title
         }
       />
-      <span className="text-xs text-red-500">
-        {formState.fieldErrors?.title?.[0]}
-      </span>
+      <FieldError actionState={formState} name="title" />
 
       <Label htmlFor="content">Content</Label>
       <Textarea
@@ -47,9 +46,8 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
           (formState.payload?.get('content') as string) ?? ticket?.content
         }
       />
-      <span className="text-xs text-red-500">
-        {formState.fieldErrors?.content?.[0]}
-      </span>
+      <FieldError actionState={formState} name="content" />
+
       <SubmitButton label={ticket ? 'Update' : 'Create'} />
 
       {formState.message}
