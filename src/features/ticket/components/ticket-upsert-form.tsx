@@ -23,7 +23,7 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
     },
   )
   return (
-    <Form action={formAction} className="flex flex-col gap-y-4">
+    <Form action={formAction} className="flex flex-col gap-y-2">
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"
@@ -34,7 +34,10 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
           (formState.payload?.get('title') as string) ?? ticket?.title
         }
       />
-      <span>{formState.fieldErrors?.title}</span>
+      <span className="text-xs text-red-500">
+        {formState.fieldErrors?.title?.[0]}
+      </span>
+
       <Label htmlFor="content">Content</Label>
       <Textarea
         id="content"
@@ -44,7 +47,9 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
           (formState.payload?.get('content') as string) ?? ticket?.content
         }
       />
-      <span>{formState.fieldErrors?.content}</span>
+      <span className="text-xs text-red-500">
+        {formState.fieldErrors?.content?.[0]}
+      </span>
       <SubmitButton label={ticket ? 'Update' : 'Create'} />
 
       {formState.message}
