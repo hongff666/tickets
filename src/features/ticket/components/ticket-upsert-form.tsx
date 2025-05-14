@@ -4,17 +4,17 @@ import { Ticket } from '@prisma/client'
 import Form from 'next/form'
 import { useActionState, useMemo } from 'react'
 
-import { SubmitButton } from '@/components/form/submmit-button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-
 import { FieldError } from '@/components/form/field-error'
 import { useActionFeedback } from '@/components/form/hooks/use-action-feedback'
+import { SubmitButton } from '@/components/form/submmit-button'
 import {
   ActionState,
   EMPTY_ACTION_SATE,
 } from '@/components/form/utils/to-action-state'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { toast } from 'sonner'
 import { upsertTicket } from '../actions/upsert-ticket'
 
 type TicketUpsertProps = {
@@ -32,10 +32,14 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
     useMemo(
       () => ({
         onSuccess: ({ actionState }: { actionState: ActionState }) => {
-          console.log('Success:', actionState.message)
+          if (actionState.message) {
+            toast.success(actionState.message)
+          }
         },
         onError: ({ actionState }: { actionState: ActionState }) => {
-          console.log('Error:', actionState.message)
+          if (actionState.message) {
+            toast.error(actionState.message)
+          }
         },
       }),
       [],
@@ -68,8 +72,6 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
       <FieldError actionState={formState} name="content" />
 
       <SubmitButton label={ticket ? 'Update' : 'Create'} />
-
-      {formState.message}
     </Form>
   )
 }
