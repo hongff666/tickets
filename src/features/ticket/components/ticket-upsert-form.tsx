@@ -1,20 +1,15 @@
 'use client'
 
+import { Form } from '@/components/form/form'
 import { Ticket } from '@prisma/client'
-import Form from 'next/form'
-import { useActionState, useMemo } from 'react'
+import { useActionState } from 'react'
 
 import { FieldError } from '@/components/form/field-error'
-import { useActionFeedback } from '@/components/form/hooks/use-action-feedback'
 import { SubmitButton } from '@/components/form/submmit-button'
-import {
-  ActionState,
-  EMPTY_ACTION_SATE,
-} from '@/components/form/utils/to-action-state'
+import { EMPTY_ACTION_SATE } from '@/components/form/utils/to-action-state'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { toast } from 'sonner'
 import { upsertTicket } from '../actions/upsert-ticket'
 
 type TicketUpsertProps = {
@@ -27,27 +22,8 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
     EMPTY_ACTION_SATE,
   )
 
-  useActionFeedback(
-    formState,
-    useMemo(
-      () => ({
-        onSuccess: ({ actionState }: { actionState: ActionState }) => {
-          if (actionState.message) {
-            toast.success(actionState.message)
-          }
-        },
-        onError: ({ actionState }: { actionState: ActionState }) => {
-          if (actionState.message) {
-            toast.error(actionState.message)
-          }
-        },
-      }),
-      [],
-    ),
-  )
-
   return (
-    <Form action={formAction} className="flex flex-col gap-y-2">
+    <Form action={formAction} actionState={formState}>
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"
