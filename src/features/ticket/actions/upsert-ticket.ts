@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
+import { setCookieByKey } from '@/actions/cookies'
 import {
   ActionState,
   fromToActionState,
@@ -43,8 +44,9 @@ export const upsertTicket = async (
   revalidatePath(ticketsPath())
   if (ticketId) {
     revalidatePath(ticketPath(ticketId))
+    await setCookieByKey('toast', 'Ticket updated successfully') // 设置 cookie，以便在重定向后可以使用
     redirect(ticketPath(ticketId))
   }
 
-  return toActionState('SUCCESS', 'Ticket updated/created successfully')
+  return toActionState('SUCCESS', 'Ticket created successfully')
 }
