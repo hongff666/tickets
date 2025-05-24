@@ -1,11 +1,13 @@
 'use client'
 
 import { deleteCookieByKey, getCookieByKey } from '@/actions/cookies'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 const RedirectToast = () => {
   const [hasShownToast, setHasShownToast] = useState(false)
+  const pathName = usePathname()
 
   useEffect(() => {
     if (hasShownToast) return
@@ -17,7 +19,7 @@ const RedirectToast = () => {
         setHasShownToast(true)
       }
     })()
-  }, [hasShownToast])
+  }, [hasShownToast, pathName])
 
   return null
 }
