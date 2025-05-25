@@ -15,6 +15,11 @@ import { ticketPath, ticketsPath } from '@/paths'
 const ticketSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   content: z.string().min(1, 'Content is required'),
+  deadline: z.string().min(1, 'Deadline is required'),
+  bounty: z.coerce
+    .number()
+    .min(0, 'Bounty must be a positive number')
+    .nonnegative('Bounty cannot be negative'),
 })
 
 export const upsertTicket = async (
@@ -25,15 +30,22 @@ export const upsertTicket = async (
   try {
     // 使用 Zod 验证表单数据的格式和必填字段
     const data = ticketSchema.parse({
-      title: formData.get('title') as string, // 获取表单中的标题字段
-      content: formData.get('content') as string, // 获取表单中的内容字段
+      title: formData.get('title'),
+      content: formData.get('content'),
+      deadline: formData.get('deadline'),
+      bounty: formData.get('bounty'),
     })
+
+    const dbData = {
+      ...data,
+      bounty: data.bounty * 100,
+    }
 
     // 使用 Prisma 的 upsert 方法更新或创建 Ticket 数据
     await prisma.ticket.upsert({
       where: { id: ticketId || '' }, // 如果 ticketId 存在，则根据 ID 更新；否则创建新记录
-      update: data, // 更新时使用解析后的数据
-      create: data, // 创建时使用解析后的数据
+      update: dbData, // 更新时使用解析后的数据
+      create: dbData, // 创建时使用解析后的数据
     })
   } catch (error) {
     return fromToActionState(error, formData) // 如果发生错误，返回错误信息和表单数据

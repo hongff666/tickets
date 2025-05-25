@@ -24,28 +24,61 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
 
   return (
     <Form action={formAction} actionState={formState}>
-      <Label htmlFor="title">Title</Label>
-      <Input
-        id="title"
-        name="title"
-        type="text"
-        className="w-full"
-        defaultValue={
-          (formState.payload?.get('title') as string) ?? ticket?.title
-        }
-      />
-      <FieldError actionState={formState} name="title" />
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="title">Title</Label>
+        <Input
+          id="title"
+          name="title"
+          type="text"
+          className="w-full"
+          defaultValue={
+            (formState.payload?.get('title') as string) ?? ticket?.title
+          }
+        />
+        <FieldError actionState={formState} name="title" />
+      </div>
 
-      <Label htmlFor="content">Content</Label>
-      <Textarea
-        id="content"
-        name="content"
-        className="w-full"
-        defaultValue={
-          (formState.payload?.get('content') as string) ?? ticket?.content
-        }
-      />
-      <FieldError actionState={formState} name="content" />
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="content">Content</Label>
+        <Textarea
+          id="content"
+          name="content"
+          className="w-full"
+          defaultValue={
+            (formState.payload?.get('content') as string) ?? ticket?.content
+          }
+        />
+        <FieldError actionState={formState} name="content" />
+      </div>
+
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-1 flex-col gap-2">
+          <Label htmlFor="title">Deadline</Label>
+          <Input
+            id="deadline"
+            name="deadline"
+            type="date"
+            className="w-full"
+            defaultValue={
+              (formState.payload?.get('deadline') as string) ?? ticket?.deadline
+            }
+          />
+          <FieldError actionState={formState} name="deadline" />
+        </div>
+        <div className="flex flex-1 flex-col gap-2">
+          <Label htmlFor="bounty">Bounty($)</Label>
+          <Input
+            id="bounty"
+            name="bounty"
+            type="number"
+            className="w-full"
+            defaultValue={
+              (formState.payload?.get('bounty') as string) ?? ticket?.bounty
+            }
+          />
+          <FieldError actionState={formState} name="bounty" />
+        </div>
+      </div>
 
       <SubmitButton label={ticket ? 'Update' : 'Create'} />
     </Form>

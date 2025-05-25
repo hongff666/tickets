@@ -21,4 +21,6 @@ model Ticket {
   title     String       @db.VarChar(255)
   content   String       @db.VarChar(1024)
   status    TicketStatus @default(OPEN)
+  deadline  String
+  bounty    Int
 }

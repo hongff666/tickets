@@ -5,7 +5,13 @@ import Form from 'next/form'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { ticketEditPath, ticketPath } from '@/paths'
 
 import { deleteTicket } from '../actions/delete-ticket'
@@ -64,6 +70,14 @@ const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
             {ticket.content}
           </p>
         </CardContent>
+        <CardFooter className="flex items-center justify-between">
+          <span className="text-muted-foreground text-sm">
+            {ticket.deadline}
+          </span>
+          <span className="text-muted-foreground text-sm">
+            Bounty: {ticket.bounty / 100} USD
+          </span>
+        </CardFooter>
       </Card>
 
       <div className="flex flex-col gap-y-2">
