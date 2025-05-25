@@ -4,6 +4,7 @@ import { Form } from '@/components/form/form'
 import { Ticket } from '@prisma/client'
 import { useActionState } from 'react'
 
+import { DatePicker } from '@/components/date-picker'
 import { FieldError } from '@/components/form/field-error'
 import { SubmitButton } from '@/components/form/submmit-button'
 import { EMPTY_ACTION_SATE } from '@/components/form/utils/to-action-state'
@@ -54,12 +55,10 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
 
       <div className="flex items-center justify-between gap-2">
         <div className="flex flex-1 flex-col gap-2">
-          <Label htmlFor="title">Deadline</Label>
-          <Input
+          <Label htmlFor="deadline">Deadline</Label>
+          <DatePicker
             id="deadline"
             name="deadline"
-            type="date"
-            className="w-full"
             defaultValue={
               (formState.payload?.get('deadline') as string) ?? ticket?.deadline
             }
