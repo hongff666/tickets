@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/card'
 import { ticketEditPath, ticketPath } from '@/paths'
 
+import { toCurrentFromCent } from '@/utils/currency'
 import { deleteTicket } from '../actions/delete-ticket'
 import { TICKET_ICONS } from '../constants'
 
@@ -75,7 +76,7 @@ const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
             {ticket.deadline}
           </span>
           <span className="text-muted-foreground text-sm">
-            Bounty: {ticket.bounty / 100} USD
+            {toCurrentFromCent(ticket.bounty)}
           </span>
         </CardFooter>
       </Card>

@@ -11,6 +11,7 @@ import {
 } from '@/components/form/utils/to-action-state'
 import { prisma } from '@/lib/prisma'
 import { ticketPath, ticketsPath } from '@/paths'
+import { toCent } from '@/utils/currency'
 
 const ticketSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -38,7 +39,7 @@ export const upsertTicket = async (
 
     const dbData = {
       ...data,
-      bounty: data.bounty * 100,
+      bounty: toCent(data.bounty),
     }
 
     // 使用 Prisma 的 upsert 方法更新或创建 Ticket 数据
