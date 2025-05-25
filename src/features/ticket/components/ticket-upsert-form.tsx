@@ -2,7 +2,7 @@
 
 import { Form } from '@/components/form/form'
 import { Ticket } from '@prisma/client'
-import { useActionState } from 'react'
+import { useActionState, useRef } from 'react'
 
 import { DatePicker } from '@/components/date-picker'
 import { FieldError } from '@/components/form/field-error'
@@ -24,8 +24,16 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
     EMPTY_ACTION_SATE,
   )
 
+  const datePickerRef = useRef<{
+    reset: () => void
+  }>(null)
+
+  const handleSuccess = () => {
+    datePickerRef.current?.reset()
+  }
+
   return (
-    <Form action={formAction} actionState={formState}>
+    <Form action={formAction} actionState={formState} onSuccess={handleSuccess}>
       <div className="flex flex-col gap-2">
         <Label htmlFor="title">Title</Label>
         <Input
@@ -58,7 +66,7 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
           <Label htmlFor="deadline">Deadline</Label>
           <DatePicker
             id="deadline"
-            key={formState.timestamp}
+            ref={datePickerRef}
             name="deadline"
             defaultValue={
               (formState.payload?.get('deadline') as string) ?? ticket?.deadline

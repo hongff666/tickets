@@ -16,12 +16,24 @@ type DataPickerProps = {
   id: string
   name?: string
   defaultValue?: string
+  ref?: React.RefObject<{
+    reset: () => void
+  } | null>
 }
 
-export const DatePicker = ({ id, name, defaultValue }: DataPickerProps) => {
+export const DatePicker = ({
+  id,
+  name,
+  defaultValue,
+  ref,
+}: DataPickerProps) => {
   const [date, setDate] = React.useState<Date | undefined>(
     defaultValue ? new Date(defaultValue) : new Date(),
   )
+
+  React.useImperativeHandle(ref, () => ({
+    reset: () => setDate(new Date()),
+  }))
 
   const [open, setOpen] = React.useState(false)
 
