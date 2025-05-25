@@ -58,6 +58,7 @@ export const TicketUpsertForm = ({ ticket }: TicketUpsertProps) => {
           <Label htmlFor="deadline">Deadline</Label>
           <DatePicker
             id="deadline"
+            key={formState.timestamp}
             name="deadline"
             defaultValue={
               (formState.payload?.get('deadline') as string) ?? ticket?.deadline

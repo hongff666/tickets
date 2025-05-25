@@ -23,10 +23,17 @@ export const DatePicker = ({ id, name, defaultValue }: DataPickerProps) => {
     defaultValue ? new Date(defaultValue) : new Date(),
   )
 
+  const [open, setOpen] = React.useState(false)
+
   const formattedStringDate = date ? format(date, 'yyyy-MM-dd') : ''
 
+  const handleSelectDate = (selectedDate: Date | undefined) => {
+    setDate(selectedDate)
+    setOpen(false)
+  }
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger id={id} asChild>
         <Button
           variant={'outline'}
@@ -41,7 +48,7 @@ export const DatePicker = ({ id, name, defaultValue }: DataPickerProps) => {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleSelectDate}
           initialFocus
         />
       </PopoverContent>
