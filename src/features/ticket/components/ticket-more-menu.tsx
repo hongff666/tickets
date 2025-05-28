@@ -29,10 +29,14 @@ export const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
   )
 
   const handleUpdateTicketStatus = async (status: string) => {
-    const result = await UpdateTicketStatus(
-      ticket.id,
-      status as Ticket['status'],
-    )
+    const promise = UpdateTicketStatus(ticket.id, status as Ticket['status'])
+
+    toast.promise(promise, {
+      loading: 'Updating ticket status...',
+    })
+
+    const result = await promise
+
     if (result.status === 'ERROR') {
       toast.error(result.message)
     } else {
