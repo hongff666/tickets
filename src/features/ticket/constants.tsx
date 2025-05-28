@@ -12,3 +12,9 @@ const TICKET_ICONS: Record<TicketStatus, React.ReactElement> = {
 }
 
 export { TICKET_ICONS }
+
+export const TICKET_STATUS_LABELS: Record<TicketStatus, string> = {
+  OPEN: 'Open',
+  CLOSED: 'Closed',
+  IN_PROGRESS: 'In Progress',
+}

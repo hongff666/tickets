@@ -2,17 +2,20 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Ticket } from '@prisma/client'
 import { LucideTrash } from 'lucide-react'
+import { TICKET_STATUS_LABELS } from '../constants'
 
 type TicketMoreMenuProps = {
   ticket: Ticket
   trigger: React.ReactNode
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
   const deleteButton = (
     <DropdownMenuItem>
@@ -20,10 +23,25 @@ export const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
       <span>Delete</span>
     </DropdownMenuItem>
   )
+
+  const ticketStatusRadioGroupItems = (
+    <DropdownMenuRadioGroup value={ticket.status}>
+      {Object.keys(TICKET_STATUS_LABELS).map((status) => (
+        <DropdownMenuRadioItem key={status} value={status}>
+          {TICKET_STATUS_LABELS[status as keyof typeof TICKET_STATUS_LABELS]}
+        </DropdownMenuRadioItem>
+      ))}
+    </DropdownMenuRadioGroup>
+  )
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent side="right">{deleteButton}</DropdownMenuContent>
+      <DropdownMenuContent side="right">
+        {ticketStatusRadioGroupItems}
+        <DropdownMenuSeparator />
+        {deleteButton}
+      </DropdownMenuContent>
     </DropdownMenu>
   )
 }
