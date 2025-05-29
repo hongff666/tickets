@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { setCookieByKey } from '@/actions/cookies'
 import {
   ActionState,
-  fromToActionState,
+  fromErrorToActionState,
   toActionState,
 } from '@/components/form/utils/to-action-state'
 import { prisma } from '@/lib/prisma'
@@ -49,7 +49,7 @@ export const upsertTicket = async (
       create: dbData, // 创建时使用解析后的数据
     })
   } catch (error) {
-    return fromToActionState(error, formData) // 如果发生错误，返回错误信息和表单数据
+    return fromErrorToActionState(error, formData) // 如果发生错误，返回错误信息和表单数据
   }
 
   // 如果 ticketId 存在，则重定向到更新后的票据页面；否则重定向到票据列表页面

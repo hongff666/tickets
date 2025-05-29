@@ -15,7 +15,7 @@ export const EMPTY_ACTION_SATE: ActionState = {
   timestamp: Date.now(),
 }
 
-export const fromToActionState = (
+export const fromErrorToActionState = (
   error: unknown,
   formData?: FormData,
 ): ActionState => {

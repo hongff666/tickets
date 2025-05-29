@@ -1,7 +1,7 @@
 'use server'
 
 import {
-  fromToActionState,
+  fromErrorToActionState,
   toActionState,
 } from '@/components/form/utils/to-action-state'
 import { prisma } from '@/lib/prisma'
@@ -18,7 +18,7 @@ export const UpdateTicketStatus = async (id: string, status: TicketStatus) => {
       data: { status },
     })
   } catch (error) {
-    return fromToActionState(error)
+    return fromErrorToActionState(error)
   }
 
   revalidatePath(ticketsPath())
