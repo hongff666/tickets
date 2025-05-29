@@ -6,7 +6,6 @@ import {
   LucidePencil,
   LucideTrash,
 } from 'lucide-react'
-import Form from 'next/form'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -19,6 +18,7 @@ import {
 } from '@/components/ui/card'
 import { ticketEditPath, ticketPath } from '@/paths'
 
+import { CustomdDialog } from '@/components/custom-dialog'
 import { toCurrentFromCent } from '@/utils/currency'
 import { deleteTicket } from '../actions/delete-ticket'
 import { TICKET_ICONS } from '../constants'
@@ -47,11 +47,14 @@ const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
   )
 
   const deleteButton = (
-    <Form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant="outline" size="icon">
-        <LucideTrash className="h-4 w-4" />
-      </Button>
-    </Form>
+    <CustomdDialog
+      action={deleteTicket.bind(null, ticket.id)}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideTrash className="h-4 w-4" />
+        </Button>
+      }
+    />
   )
 
   const moreMenu = (
