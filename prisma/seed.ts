@@ -3,14 +3,18 @@ import { PrismaClient, TicketStatus } from '@prisma/client'
 
 let index = 0
 
-export const tickets = Array.from({ length: 3 }, () => ({
+export const tickets = Array.from({ length: 20 }, () => ({
   title: `${index++}: ${faker.lorem.sentence()}`,
+  createdAt: faker.date.past(),
+  updatedAt: faker.date.recent(),
   content: faker.lorem.paragraph(),
   status: faker.helpers.arrayElement([
     TicketStatus.OPEN,
     TicketStatus.CLOSED,
     TicketStatus.IN_PROGRESS,
   ]),
+  deadline: faker.date.future().toISOString().split('T')[0],
+  bounty: faker.number.float({ min: 0, max: 1000 }),
 }))
 
 const prisma = new PrismaClient()
