@@ -1,5 +1,6 @@
 'use client'
 
+import { CustomdDialog } from '@/components/custom-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +13,7 @@ import {
 import { Ticket } from '@prisma/client'
 import { LucideTrash } from 'lucide-react'
 import { toast } from 'sonner'
+import { deleteTicket } from '../actions/delete-ticket'
 import { UpdateTicketStatus } from '../actions/update-ticket-status'
 import { TICKET_STATUS_LABELS } from '../constants'
 
@@ -22,10 +24,14 @@ type TicketMoreMenuProps = {
 
 export const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
   const deleteButton = (
-    <DropdownMenuItem>
-      <LucideTrash className="mr-2 h-4 w-4" />
-      <span>Delete</span>
-    </DropdownMenuItem>
+    <CustomdDialog
+      action={deleteTicket.bind(null, ticket.id)}
+      trigger={
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <LucideTrash className="mr-2 h-4 w-4" /> Delete
+        </DropdownMenuItem>
+      }
+    />
   )
 
   const handleUpdateTicketStatus = async (status: string) => {
