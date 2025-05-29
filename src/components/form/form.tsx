@@ -37,7 +37,7 @@ export const Form = ({
           onError?.(actionState)
         },
       }),
-      [],
+      [onSuccess, onError],
     ),
   )
 

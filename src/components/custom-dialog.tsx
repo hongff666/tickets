@@ -8,8 +8,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
-import { cloneElement, useState } from 'react'
+import { cloneElement, useActionState, useState } from 'react'
+import { Form } from './form/form'
+import { SubmitButton } from './form/submmit-button'
+import { ActionState, EMPTY_ACTION_SATE } from './form/utils/to-action-state'
 
 interface WithClickHandler {
   onClick?: (e: React.MouseEvent) => void
@@ -18,7 +20,7 @@ interface WithClickHandler {
 type useCustomDialogProps = {
   title?: string
   description?: string
-  action: () => Promise<void>
+  action: () => Promise<ActionState>
   trigger: React.ReactElement<WithClickHandler>
 }
 
@@ -29,6 +31,8 @@ export const useCustomdDialog = ({
   trigger,
 }: useCustomDialogProps) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const [actionState, formAction] = useActionState(action, EMPTY_ACTION_SATE)
 
   const dialogTrigger = cloneElement(trigger, {
     onClick: () => {
@@ -46,11 +50,9 @@ export const useCustomdDialog = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <form action={action}>
-              <Button type="submit" className="w-full">
-                Confirm
-              </Button>
-            </form>
+            <Form action={formAction} actionState={actionState}>
+              <SubmitButton label="confirm" />
+            </Form>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
