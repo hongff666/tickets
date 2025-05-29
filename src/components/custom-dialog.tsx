@@ -50,7 +50,11 @@ export const useCustomdDialog = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Form action={formAction} actionState={actionState}>
+            <Form
+              action={formAction}
+              actionState={actionState}
+              onSuccess={() => setIsOpen(false)}
+            >
               <SubmitButton label="confirm" />
             </Form>
           </AlertDialogAction>
