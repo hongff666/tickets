@@ -1,6 +1,6 @@
 'use client'
 
-import { CustomdDialog } from '@/components/custom-dialog'
+import { useCustomdDialog } from '@/components/custom-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,16 +23,14 @@ type TicketMoreMenuProps = {
 }
 
 export const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
-  const deleteButton = (
-    <CustomdDialog
-      action={deleteTicket.bind(null, ticket.id)}
-      trigger={
-        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-          <LucideTrash className="mr-2 h-4 w-4" /> Delete
-        </DropdownMenuItem>
-      }
-    />
-  )
+  const [deleteButton, deleteDialog] = useCustomdDialog({
+    action: deleteTicket.bind(null, ticket.id),
+    trigger: (
+      <DropdownMenuItem>
+        <LucideTrash className="mr-2 h-4 w-4" /> Delete
+      </DropdownMenuItem>
+    ),
+  })
 
   const handleUpdateTicketStatus = async (status: string) => {
     const promise = UpdateTicketStatus(ticket.id, status as Ticket['status'])
@@ -64,13 +62,16 @@ export const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
   )
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent side="right">
-        {ticketStatusRadioGroupItems}
-        <DropdownMenuSeparator />
-        {deleteButton}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+        <DropdownMenuContent side="right">
+          {ticketStatusRadioGroupItems}
+          <DropdownMenuSeparator />
+          {deleteButton}
+        </DropdownMenuContent>
+      </DropdownMenu>
+      {deleteDialog}
+    </>
   )
 }

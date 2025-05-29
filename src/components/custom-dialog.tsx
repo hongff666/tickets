@@ -7,26 +7,37 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { cloneElement, useState } from 'react'
 
-type CustomDialogProps = {
+interface WithClickHandler {
+  onClick?: (e: React.MouseEvent) => void
+}
+
+type useCustomDialogProps = {
   title?: string
   description?: string
   action: () => Promise<void>
-  trigger: React.ReactNode
+  trigger: React.ReactElement<WithClickHandler>
 }
 
-export const CustomdDialog = ({
+export const useCustomdDialog = ({
   title = 'Confirm Action',
   description = 'Are you sure you want to proceed with this action?',
   action,
   trigger,
-}: CustomDialogProps) => {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
+}: useCustomDialogProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const dialogTrigger = cloneElement(trigger, {
+    onClick: () => {
+      setIsOpen((state) => !state)
+    },
+  })
+
+  const dialog = (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -45,4 +56,5 @@ export const CustomdDialog = ({
       </AlertDialogContent>
     </AlertDialog>
   )
+  return [dialogTrigger, dialog]
 }
