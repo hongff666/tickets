@@ -26,16 +26,18 @@ model Ticket {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  username String    @unique
-  email    String    @unique
-  password String
-  sessions Session[]
+  id           String    @id @default(cuid())
+  username     String    @unique
+  email        String    @unique
+  passwordHash String
+  sessions     Session[]
 }
 
 model Session {
   id        String   @id
   expiresAt DateTime
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
