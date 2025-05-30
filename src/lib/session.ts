@@ -1,3 +1,5 @@
+'use server'
+
 import { sha256 } from '@oslojs/crypto/sha2'
 import {
   encodeBase32LowerCaseNoPadding,
@@ -8,7 +10,7 @@ import { prisma } from './prisma'
 import type { Session, User } from '@prisma/client'
 import { cookies } from 'next/headers'
 
-export function generateSessionToken(): string {
+export async function generateSessionToken(): Promise<string> {
   const bytes = new Uint8Array(20)
   crypto.getRandomValues(bytes)
   const token = encodeBase32LowerCaseNoPadding(bytes)
