@@ -12,6 +12,7 @@ import {
 } from '@/lib/session'
 import { ticketsPath } from '@/paths'
 import { sha256 } from '@oslojs/crypto/sha2'
+import { Prisma } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
@@ -77,7 +78,11 @@ export const SignUp = async (_actionState: ActionState, formData: FormData) => {
     const session = await createSession(token, user.id)
     setSessionTokenCookie(token, session.expiresAt)
   } catch (error) {
-    return fromErrorToActionState(error, formData)
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return fromErrorToActionState(new Error('user already exist'), formData)
+    } else {
+      return fromErrorToActionState(error, formData)
+    }
   }
 
   redirect(ticketsPath())
