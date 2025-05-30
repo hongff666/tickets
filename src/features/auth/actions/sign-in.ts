@@ -3,7 +3,6 @@
 import {
   ActionState,
   fromErrorToActionState,
-  toActionState,
 } from '@/components/form/utils/to-action-state'
 import { prisma } from '@/lib/prisma'
 import {
@@ -45,9 +44,9 @@ export const SignIn = async (_actionState: ActionState, formData: FormData) => {
     })
 
     if (!user) {
-      return toActionState(
-        'ERROR',
-        'Incorrect email or password. Please try again.',
+      return fromErrorToActionState(
+        new Error('Incorrect email or password. Please try again.'),
+        formData,
       )
     } else {
       const passwordBytes = stringToUint8Array(password)
@@ -55,9 +54,9 @@ export const SignIn = async (_actionState: ActionState, formData: FormData) => {
       const hashedPassword = uint8ArrayToHex(hashedPasswordBytes)
 
       if (user.passwordHash !== hashedPassword) {
-        return toActionState(
-          'ERROR',
-          'Incorrect email or password. Please try again.',
+        return fromErrorToActionState(
+          new Error('Incorrect email or password. Please try again.'),
+          formData,
         )
       }
 
