@@ -3,10 +3,16 @@
 import {
   ActionState,
   fromErrorToActionState,
-  toActionState,
 } from '@/components/form/utils/to-action-state'
 import { prisma } from '@/lib/prisma'
+import {
+  createSession,
+  generateSessionToken,
+  setSessionTokenCookie,
+} from '@/lib/session'
+import { ticketsPath } from '@/paths'
 import { sha256 } from '@oslojs/crypto/sha2'
+import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 function stringToUint8Array(str: string): Uint8Array {
@@ -59,16 +65,20 @@ export const SignUp = async (_actionState: ActionState, formData: FormData) => {
     const hashedPasswordBytes = sha256(passwordBytes)
     const hashedPassword = uint8ArrayToHex(hashedPasswordBytes)
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         username,
         email,
         passwordHash: hashedPassword,
       },
     })
+
+    const token = generateSessionToken()
+    const session = await createSession(token, user.id)
+    setSessionTokenCookie(token, session.expiresAt)
   } catch (error) {
     return fromErrorToActionState(error, formData)
   }
 
-  return toActionState('SUCCESS', 'User signed up successfully')
+  redirect(ticketsPath())
 }
