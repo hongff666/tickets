@@ -30,7 +30,7 @@ const Header = () => {
         Sign In
       </Link>
       <form action={signOut}>
-        <SubmitButton label="Sign Out" icon={<LucideLogOut />} />
+        <SubmitButton icon={<LucideLogOut />} />
       </form>
     </>
   )
