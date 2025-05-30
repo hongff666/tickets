@@ -74,7 +74,7 @@ export const SignUp = async (_actionState: ActionState, formData: FormData) => {
       },
     })
 
-    const token = generateSessionToken()
+    const token = await generateSessionToken()
     const session = await createSession(token, user.id)
     setSessionTokenCookie(token, session.expiresAt)
   } catch (error) {
