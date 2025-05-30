@@ -4,12 +4,15 @@ import Link from 'next/link'
 import { homePath, signInPath, signUpPath, ticketsPath } from '@/paths'
 
 import { signOut } from '@/features/auth/actions/sign-out'
+import { getAuth } from '@/features/auth/queries/get-auth'
 import { SubmitButton } from './form/submmit-button'
 import { ThemeSwitcher } from './theme/theme-switcher'
 import { buttonVariants } from './ui/button'
 
-const Header = () => {
-  const navItems = (
+const Header = async () => {
+  const { user } = await getAuth()
+
+  const navItems = user ? (
     <>
       <Link
         className={buttonVariants({ variant: 'default' })}
@@ -17,6 +20,12 @@ const Header = () => {
       >
         Tickets
       </Link>
+      <form action={signOut}>
+        <SubmitButton icon={<LucideLogOut />} />
+      </form>
+    </>
+  ) : (
+    <>
       <Link
         className={buttonVariants({ variant: 'outline' })}
         href={signUpPath()}
@@ -29,9 +38,6 @@ const Header = () => {
       >
         Sign In
       </Link>
-      <form action={signOut}>
-        <SubmitButton icon={<LucideLogOut />} />
-      </form>
     </>
   )
 
