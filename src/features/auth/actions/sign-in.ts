@@ -6,6 +6,11 @@ import {
   toActionState,
 } from '@/components/form/utils/to-action-state'
 import { prisma } from '@/lib/prisma'
+import {
+  createSession,
+  generateSessionToken,
+  setSessionTokenCookie,
+} from '@/lib/session'
 import { ticketsPath } from '@/paths'
 import { sha256 } from '@oslojs/crypto/sha2'
 import { redirect } from 'next/navigation'
@@ -55,6 +60,10 @@ export const SignIn = async (_actionState: ActionState, formData: FormData) => {
           'Incorrect email or password. Please try again.',
         )
       }
+
+      const token = generateSessionToken()
+      const session = await createSession(token, user.id)
+      setSessionTokenCookie(token, session.expiresAt)
     }
   } catch (error) {
     return fromErrorToActionState(error, formData)
