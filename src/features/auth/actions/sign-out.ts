@@ -3,7 +3,7 @@
 import { invalidateSession } from '@/lib/session'
 import { signInPath } from '@/paths'
 import { redirect } from 'next/navigation'
-import { getAuth } from '../queries/get-auth'
+import { getAuth } from './get-auth'
 
 export const signOut = async () => {
   const { session } = await getAuth()

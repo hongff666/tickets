@@ -1,16 +1,31 @@
+'use client'
+
 import { LucideKanban, LucideLogOut } from 'lucide-react'
 import Link from 'next/link'
 
 import { homePath, signInPath, signUpPath, ticketsPath } from '@/paths'
 
+import { getAuth } from '@/features/auth/actions/get-auth'
 import { signOut } from '@/features/auth/actions/sign-out'
-import { getAuth } from '@/features/auth/queries/get-auth'
+import type { User } from '@prisma/client'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { SubmitButton } from './form/submmit-button'
 import { ThemeSwitcher } from './theme/theme-switcher'
 import { buttonVariants } from './ui/button'
 
-const Header = async () => {
-  const { user } = await getAuth()
+const Header = () => {
+  const pathname = usePathname()
+  useEffect(() => {
+    const fetchUser = async () => {
+      const auth = await getAuth()
+      setUser(auth.user)
+    }
+
+    fetchUser()
+  }, [pathname])
+
+  const [user, setUser] = useState<User | null>(null)
 
   const navItems = user ? (
     <>
