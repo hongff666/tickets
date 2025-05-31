@@ -9,8 +9,9 @@ import {
   fromErrorToActionState,
   toActionState,
 } from '@/components/form/utils/to-action-state'
+import { getAuth } from '@/features/auth/actions/get-auth'
 import { prisma } from '@/lib/prisma'
-import { ticketPath, ticketsPath } from '@/paths'
+import { signInPath, ticketPath, ticketsPath } from '@/paths'
 import { toCent } from '@/utils/currency'
 
 const ticketSchema = z.object({
@@ -28,6 +29,12 @@ export const upsertTicket = async (
   _actionState: ActionState,
   formData: FormData,
 ): Promise<ActionState> => {
+  const { user } = await getAuth()
+
+  if (!user) {
+    redirect(signInPath())
+  }
+
   try {
     // 使用 Zod 验证表单数据的格式和必填字段
     const data = ticketSchema.parse({
@@ -39,6 +46,7 @@ export const upsertTicket = async (
 
     const dbData = {
       ...data,
+      userId: user.id,
       bounty: toCent(data.bounty),
     }
 
