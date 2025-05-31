@@ -1,7 +1,25 @@
 import { faker } from '@faker-js/faker'
+import { sha256 } from '@oslojs/crypto/sha2'
 import { PrismaClient, TicketStatus } from '@prisma/client'
 
+function stringToUint8Array(str: string): Uint8Array {
+  return new TextEncoder().encode(str)
+}
+
+function uint8ArrayToHex(array: Uint8Array): string {
+  return Array.from(array)
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('')
+}
+
 let index = 0
+
+const users = [
+  {
+    username: 'admin',
+    email: 'admin@qq.com',
+  },
+]
 
 export const tickets = Array.from({ length: 20 }, () => ({
   title: `${index++}: ${faker.lorem.sentence()}`,
@@ -19,14 +37,29 @@ export const tickets = Array.from({ length: 20 }, () => ({
 
 const prisma = new PrismaClient()
 
+const passwordBytes = stringToUint8Array('admin@123')
+const hashedPasswordBytes = sha256(passwordBytes)
+const hashedPassword = uint8ArrayToHex(hashedPasswordBytes)
+
 const seed = async () => {
   const t0 = performance.now()
+
+  await prisma.user.deleteMany()
   await prisma.ticket.deleteMany()
 
   console.log(`Creating ${tickets.length} tickets...`)
 
+  const dbUsers = await prisma.user.createManyAndReturn({
+    data: users.map((user) => ({
+      ...user,
+      passwordHash: hashedPassword,
+    })),
+  })
   await prisma.ticket.createMany({
-    data: tickets,
+    data: tickets.map((ticket) => ({
+      ...ticket,
+      userId: dbUsers[0].id,
+    })),
     skipDuplicates: true,
   })
 
