@@ -50,7 +50,7 @@ const Header = () => {
         Sign Up
       </Link>
       <Link
-        className={buttonVariants({ variant: 'outline' })}
+        className={buttonVariants({ variant: 'default' })}
         href={signInPath()}
       >
         Sign In
