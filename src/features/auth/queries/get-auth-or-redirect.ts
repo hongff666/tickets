@@ -3,11 +3,11 @@ import { redirect } from 'next/navigation'
 import { getAuth } from '../actions/get-auth'
 
 export const getAuthOrRedirect = async () => {
-  const user = await getAuth()
+  const { user, session } = await getAuth()
 
   if (!user) {
     redirect(signInPath())
   }
 
-  return user
+  return { user, session }
 }

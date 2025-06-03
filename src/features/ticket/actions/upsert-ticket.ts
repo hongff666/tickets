@@ -33,6 +33,7 @@ export const upsertTicket = async (
   const { user } = await getAuthOrRedirect()
 
   try {
+    // 如果 ticketId 存在，则检查用户是否是该票据的所有者(权限校验)
     if (ticketId) {
       const ticket = await prisma.ticket.findUnique({
         where: { id: ticketId },
@@ -53,7 +54,7 @@ export const upsertTicket = async (
 
     const dbData = {
       ...data,
-      userId: user!.id,
+      userId: user.id,
       bounty: toCent(data.bounty),
     }
 
