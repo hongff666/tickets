@@ -40,7 +40,7 @@ export const upsertTicket = async (
       })
 
       if (!ticket || !isOwner(user, ticket)) {
-        return toActionState('ERROR', 'Ticket not found')
+        return toActionState('ERROR', 'Ticket not authorized')
       }
     }
 

@@ -19,9 +19,13 @@ const users = [
     username: 'admin',
     email: 'admin@qq.com',
   },
+  {
+    username: 'user',
+    email: 'user@qq.com',
+  },
 ]
 
-export const tickets = Array.from({ length: 20 }, () => ({
+export const tickets = Array.from({ length: 3 }, () => ({
   title: `${index++}: ${faker.lorem.sentence()}`,
   createdAt: faker.date.past(),
   updatedAt: faker.date.recent(),
@@ -58,7 +62,7 @@ const seed = async () => {
   await prisma.ticket.createMany({
     data: tickets.map((ticket) => ({
       ...ticket,
-      userId: dbUsers[0].id,
+      userId: dbUsers[1].id,
     })),
     skipDuplicates: true,
   })
