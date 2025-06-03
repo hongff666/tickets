@@ -9,9 +9,10 @@ import {
   fromErrorToActionState,
   toActionState,
 } from '@/components/form/utils/to-action-state'
-import { getAuth } from '@/features/auth/actions/get-auth'
+import { getAuthOrRedirect } from '@/features/auth/queries/get-auth-or-redirect'
+import { isOwner } from '@/features/auth/utils/is-owner'
 import { prisma } from '@/lib/prisma'
-import { signInPath, ticketPath, ticketsPath } from '@/paths'
+import { ticketPath, ticketsPath } from '@/paths'
 import { toCent } from '@/utils/currency'
 
 const ticketSchema = z.object({
@@ -29,13 +30,19 @@ export const upsertTicket = async (
   _actionState: ActionState,
   formData: FormData,
 ): Promise<ActionState> => {
-  const { user } = await getAuth()
-
-  if (!user) {
-    redirect(signInPath())
-  }
+  const { user } = await getAuthOrRedirect()
 
   try {
+    if (ticketId) {
+      const ticket = await prisma.ticket.findUnique({
+        where: { id: ticketId },
+      })
+
+      if (!ticket || !isOwner(user, ticket)) {
+        return toActionState('ERROR', 'Ticket not found')
+      }
+    }
+
     // 使用 Zod 验证表单数据的格式和必填字段
     const data = ticketSchema.parse({
       title: formData.get('title'),
@@ -46,7 +53,7 @@ export const upsertTicket = async (
 
     const dbData = {
       ...data,
-      userId: user.id,
+      userId: user!.id,
       bounty: toCent(data.bounty),
     }
 

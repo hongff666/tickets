@@ -1,20 +1,31 @@
 {
-  "inputs": [
-    {
-      "type": "promptString",
-      "id": "pg_url",
-      "description": "PostgreSQL URL (e.g. postgresql://user:pass@localhost:5432/mydb)"
-    }
-  ],
   "servers": {
-    "postgres": {
+    "sequential-thinking": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "${input:pg_url}"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
     },
-    "fetch": {
-      "type": "stdio",
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "env": {
+        "DEFAULT_MINIMUM_TOKENS": "6000"
+      }
+    },
+    "mcp-feedback-enhanced": {
       "command": "uvx",
-      "args": ["mcp-server-fetch"]
+      "args": [
+        "mcp-feedback-enhanced@latest"
+      ],
+      "timeout": 600,
+      "autoApprove": [
+        "interactive_feedback"
+      ]
     }
   }
 }
