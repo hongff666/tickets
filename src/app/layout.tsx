@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 
 import { Header } from '@/components/header'
+import { SideBar } from '@/components/sidebar/components/sidebar'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -34,9 +35,12 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Header />
-          <main className="bg-secondary/20 flex min-h-screen flex-1 flex-col overflow-y-auto overflow-x-hidden px-8 py-24">
-            {children}
-          </main>
+          <div className="flex h-screen border-collapse overflow-hidden">
+            <SideBar />
+            <main className="bg-secondary/20 flex min-h-screen flex-1 flex-col overflow-y-auto overflow-x-hidden px-8 py-24">
+              {children}
+            </main>
+          </div>
           <Toaster expand />
         </ThemeProvider>
       </body>
