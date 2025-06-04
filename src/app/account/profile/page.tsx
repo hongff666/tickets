@@ -1,5 +1,5 @@
 import { Heading } from '@/components/heading'
-import { AccountTabs } from '@/features/account/account-tabs'
+import { AccountTabs } from '@/features/account/components/account-tabs'
 
 const ProfilePage = async () => {
   return (
