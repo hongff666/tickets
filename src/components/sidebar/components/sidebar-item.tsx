@@ -24,7 +24,7 @@ export const SidebarItem = ({ isOpen, navItem }: SidebarItemProps) => {
       )}
     >
       {cloneElement(navItem.icon, {
-        // @ts-ignore
+        // @ts-expect-error -- className is defined in the icon component
         className: cn('h-5 w-5'),
       })}
       <span

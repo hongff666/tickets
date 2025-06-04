@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 
-const getTickets = async (userId: string | undefined) => {
+const getTickets = async (userId: string | undefined | null) => {
   const tickets = await prisma.ticket.findMany({
     where: {
       userId: userId ? userId : undefined,

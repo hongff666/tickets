@@ -29,7 +29,7 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
 }
 
 export async function generateStaticParams() {
-  const tickets = await getTickets()
+  const tickets = await getTickets(null)
   return tickets.map((ticket) => ({
     ticketId: ticket.id,
   }))
