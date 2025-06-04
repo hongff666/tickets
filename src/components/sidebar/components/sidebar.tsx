@@ -7,14 +7,13 @@ import { navItems } from '../constants'
 import { SidebarItem } from './sidebar-item'
 
 const SideBar = () => {
+  const [isTransition, setIsTransition] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const { user, isFetched } = useAuth()
 
   if (!user || !isFetched) {
     return <div className="bg-secondary/20 w-[78px]" />
   }
-
-  const [isTransition, setIsTransition] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
 
   const handleToggle = (open: boolean) => {
     setIsTransition(true)
