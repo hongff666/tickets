@@ -48,8 +48,8 @@ const hashedPassword = uint8ArrayToHex(hashedPasswordBytes)
 const seed = async () => {
   const t0 = performance.now()
 
-  await prisma.user.deleteMany()
   await prisma.ticket.deleteMany()
+  await prisma.user.deleteMany()
 
   console.log(`Creating ${tickets.length} tickets...`)
 
