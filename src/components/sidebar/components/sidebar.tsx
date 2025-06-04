@@ -10,7 +10,7 @@ const SideBar = () => {
   const { user, isFetched } = useAuth()
 
   if (!user || !isFetched) {
-    return null
+    return <div className="bg-secondary/20 w-[78px]" />
   }
 
   const [isTransition, setIsTransition] = useState(false)
