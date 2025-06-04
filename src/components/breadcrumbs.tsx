@@ -1,6 +1,5 @@
 import {
   Breadcrumb,
-  BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
@@ -38,15 +37,13 @@ export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
             )
           }
           return (
-            <Fragment key={breadcrumb.title}>
-              <BreadcrumbItem>
-                {breadcrumbItem}
-                {index < breadcrumbs.length - 1 && (
-                  <BreadcrumbSeparator>
-                    <LucideSlash className="h-4 w-4" />
-                  </BreadcrumbSeparator>
-                )}
-              </BreadcrumbItem>
+            <Fragment key={breadcrumb.title + index}>
+              {breadcrumbItem}
+              {index < breadcrumbs.length - 1 && (
+                <BreadcrumbSeparator>
+                  <LucideSlash className="h-4 w-4" />
+                </BreadcrumbSeparator>
+              )}
             </Fragment>
           )
         })}
