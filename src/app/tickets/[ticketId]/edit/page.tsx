@@ -35,7 +35,7 @@ export default async function EditTicketPage({
         ]}
       />
 
-      <Separator />
+      <Separator className="border" />
 
       <div className="flex flex-1 items-center justify-center">
         <CardCompact

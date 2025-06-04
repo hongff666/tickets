@@ -28,7 +28,7 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
           ]}
         />
 
-        <Separator />
+        <Separator className="border" />
 
         <div className="animate-fade-in-from-top flex flex-col items-center">
           <TicketItem ticket={ticket} isDetail />
