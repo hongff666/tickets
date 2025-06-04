@@ -2,19 +2,20 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Separator } from '@radix-ui/react-separator'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { cloneElement } from 'react'
 import { closedClassName } from '../constants'
 import { NavItem } from '../types'
 
 type SidebarItemProps = {
   isOpen: boolean
+  isActive?: boolean
   navItem: NavItem
 }
-export const SidebarItem = ({ isOpen, navItem }: SidebarItemProps) => {
-  const path = usePathname()
-  const isActive = path === navItem.href
-
+export const SidebarItem = ({
+  isOpen,
+  isActive,
+  navItem,
+}: SidebarItemProps) => {
   return (
     <>
       {navItem.separator && <Separator className="border" />}

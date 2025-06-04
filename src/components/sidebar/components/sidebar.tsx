@@ -2,6 +2,9 @@
 
 import { useAuth } from '@/features/auth/hooks/use-auth'
 import { cn } from '@/lib/utils'
+import { signInPath, signUpPath } from '@/paths'
+import { getActivePath } from '@/utils/get-active-path'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { navItems } from '../constants'
 import { SidebarItem } from './sidebar-item'
@@ -11,9 +14,12 @@ const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { user, isFetched } = useAuth()
 
-  if (!user || !isFetched) {
-    return <div className="bg-secondary/20 w-[78px]" />
-  }
+  const pathname = usePathname()
+  const { activeIndex } = getActivePath(
+    pathname,
+    navItems.map((item) => item.href),
+    [signInPath(), signUpPath()],
+  )
 
   const handleToggle = (open: boolean) => {
     setIsTransition(true)
@@ -21,6 +27,10 @@ const SideBar = () => {
     setTimeout(() => {
       setIsTransition(false)
     }, 200)
+  }
+
+  if (!user || !isFetched) {
+    return <div className="bg-secondary/20 w-[78px]" />
   }
 
   return (
@@ -36,10 +46,11 @@ const SideBar = () => {
     >
       <div className="px-3 py-2">
         <nav className="space-y-2">
-          {navItems.map((navItem) => (
+          {navItems.map((navItem, index) => (
             <SidebarItem
               key={navItem.title}
               isOpen={isOpen}
+              isActive={activeIndex === index}
               navItem={navItem}
             />
           ))}
