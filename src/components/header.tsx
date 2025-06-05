@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import { homePath, signInPath, signUpPath } from '@/paths'
 
-import { AccountDropdown } from '@/features/account/components/account-dropdown'
+import { AccountDropdown } from '@/app/(authenticated)/account/_navigation/account-dropdown'
 import { useAuth } from '@/features/auth/hooks/use-auth'
 import { ThemeSwitcher } from './theme/theme-switcher'
 import { buttonVariants } from './ui/button'
