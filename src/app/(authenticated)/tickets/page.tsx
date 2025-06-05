@@ -8,9 +8,15 @@ import { Spinner } from '@/components/spinner'
 import { getAuth } from '@/features/auth/actions/get-auth'
 import { TicketList } from '@/features/ticket/components/ticket-list'
 import { TicketUpsertForm } from '@/features/ticket/components/ticket-upsert-form'
+import { SearchParams } from '@/features/ticket/search-params'
 
-const TicketsPage = async () => {
+type TicketPageProps = {
+  searchParams: Promise<SearchParams>
+}
+
+const TicketsPage = async ({ searchParams }: TicketPageProps) => {
   const { user } = await getAuth()
+  const resolvedSearchParams = await searchParams
 
   return (
     <>
@@ -29,7 +35,7 @@ const TicketsPage = async () => {
 
         <ErrorBoundary fallback={<PlaceHolder label="something went wrong" />}>
           <Suspense fallback={<Spinner />}>
-            <TicketList userId={user?.id} />
+            <TicketList userId={user?.id} searchParams={resolvedSearchParams} />
           </Suspense>
         </ErrorBoundary>
       </div>

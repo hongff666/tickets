@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Input } from './ui/input'
 
 type SearchInputProps = {
@@ -8,8 +8,9 @@ type SearchInputProps = {
 }
 
 export const SearchInput = ({ placeholder }: SearchInputProps) => {
-  const router = useRouter()
+  const { replace } = useRouter()
   const searchParams = useSearchParams()
+  const pathName = usePathname()
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -19,7 +20,7 @@ export const SearchInput = ({ placeholder }: SearchInputProps) => {
     } else {
       params.delete('q')
     }
-    router.replace(`?${params.toString()}`, {
+    replace(`${pathName}?${params.toString()}`, {
       scroll: false,
     })
   }
