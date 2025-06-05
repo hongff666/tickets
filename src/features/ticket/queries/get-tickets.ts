@@ -14,7 +14,8 @@ const getTickets = async (
       },
     },
     orderBy: {
-      createdAt: 'desc',
+      ...(searchParams.sort === 'bounty' && { bounty: 'desc' }),
+      ...(searchParams.sort === undefined && { createdAt: 'desc' }),
     },
     include: {
       user: {
