@@ -5,10 +5,10 @@ import Link from 'next/link'
 
 import { homePath, signInPath, signUpPath } from '@/paths'
 
-import { AccountDropdown } from '@/app/(authenticated)/account/_navigation/account-dropdown'
+import { AccountDropdown } from '@/app/_navigation/account-dropdown'
 import { useAuth } from '@/features/auth/hooks/use-auth'
-import { ThemeSwitcher } from './theme/theme-switcher'
-import { buttonVariants } from './ui/button'
+import { ThemeSwitcher } from '../../components/theme/theme-switcher'
+import { buttonVariants } from '../../components/ui/button'
 
 const Header = () => {
   const { user, isFetched } = useAuth()
