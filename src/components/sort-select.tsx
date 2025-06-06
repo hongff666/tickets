@@ -7,12 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { sortParser } from '@/features/ticket/search-params'
-import { useQueryState } from 'nuqs'
+import { sortOptions, sortParser } from '@/features/ticket/search-params'
+import { useQueryStates } from 'nuqs'
 
 type SortOption = {
+  sortKey: string
+  sortValue: string
   label: string
-  value: string
 }
 
 type SortSelectProps = {
@@ -20,21 +21,22 @@ type SortSelectProps = {
 }
 
 export const SortSelect = ({ options }: SortSelectProps) => {
-  const [sort, setSort] = useQueryState('sort', sortParser)
+  const [sort, setSort] = useQueryStates(sortParser, sortOptions)
 
-  const handleSearch = (value: string) => {
-    setSort(value)
+  const handleSearch = (sortKey: string) => {
+    const selectedOption = options.find((option) => option.sortKey === sortKey)
+    setSort({ sortKey, sortValue: selectedOption?.sortValue })
   }
 
   return (
     <div className="w-full max-w-[420px]">
-      <Select defaultValue={sort} onValueChange={handleSearch}>
+      <Select defaultValue={sort.sortKey} onValueChange={handleSearch}>
         <SelectTrigger className="w-full">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
+            <SelectItem key={option.sortKey} value={option.sortKey}>
               {option.label}
             </SelectItem>
           ))}

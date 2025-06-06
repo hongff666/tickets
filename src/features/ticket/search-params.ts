@@ -4,14 +4,20 @@ export const qParser = parseAsString.withDefault('').withOptions({
   clearOnDefault: true,
   shallow: false,
 })
-export const sortParser = parseAsString.withDefault('newest').withOptions({
+
+export const sortParser = {
+  sortKey: parseAsString.withDefault('createdAt'),
+  sortValue: parseAsString.withDefault('desc'),
+}
+
+export const sortOptions = {
   clearOnDefault: true,
   shallow: false,
-})
+}
 
 export const searchParamsCache = createSearchParamsCache({
   q: qParser,
-  sort: sortParser,
+  ...sortParser,
 })
 
 export type ParsedSearchParams = Awaited<

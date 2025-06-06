@@ -11,8 +11,7 @@ const getTickets = async (
       title: { contains: searchParams.q, mode: 'insensitive' },
     },
     orderBy: {
-      ...(searchParams.sort === 'bounty' && { bounty: 'desc' }),
-      ...(searchParams.sort === 'newest' && { createdAt: 'desc' }),
+      [searchParams.sortKey]: searchParams.sortValue,
     },
     include: {
       user: {

@@ -20,8 +20,16 @@ export const TicketList = async ({
         <SearchInput placeholder="Search Input..." />
         <SortSelect
           options={[
-            { label: 'Newest', value: 'newest' },
-            { label: 'Bounty', value: 'bounty' },
+            {
+              sortKey: 'bounty',
+              sortValue: 'desc',
+              label: 'Bounty',
+            },
+            {
+              sortKey: 'createdAt',
+              sortValue: 'desc',
+              label: 'Newest',
+            },
           ]}
         />
       </div>
