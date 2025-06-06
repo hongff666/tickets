@@ -1,6 +1,7 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { qParser } from '@/features/ticket/search-params'
+import { useQueryState } from 'nuqs'
 import { useDebouncedCallback } from 'use-debounce'
 import { Input } from './ui/input'
 
@@ -9,22 +10,11 @@ type SearchInputProps = {
 }
 
 export const SearchInput = ({ placeholder }: SearchInputProps) => {
-  const { replace } = useRouter()
-  const searchParams = useSearchParams()
-  const pathName = usePathname()
+  const [q, setQ] = useQueryState('q', qParser)
 
   const handleSearch = useDebouncedCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value
-      const params = new URLSearchParams(searchParams.toString())
-      if (value) {
-        params.set('q', value)
-      } else {
-        params.delete('q')
-      }
-      replace(`${pathName}?${params.toString()}`, {
-        scroll: false,
-      })
+      setQ(e.target.value)
     },
     500,
   )
