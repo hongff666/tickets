@@ -21,7 +21,8 @@ export const Pagination = ({
 }: PaginationProps) => {
   const startOffset = pagination.page * pagination.size + 1
   const endOffset = startOffset - 1 + pagination.size
-  const label = `${startOffset} - ${endOffset} / ${paginatedMetadata.count}`
+  const actualEndOffset = Math.min(endOffset, paginatedMetadata.count)
+  const label = `${startOffset} - ${actualEndOffset} / ${paginatedMetadata.count}`
 
   const handlePreviousPage = () => {
     onPagination({ ...pagination, page: pagination.page - 1 })
