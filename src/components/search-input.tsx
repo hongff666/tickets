@@ -21,7 +21,11 @@ export const SearchInput = ({ placeholder }: SearchInputProps) => {
 
   return (
     <div className="w-full max-w-[420px]">
-      <Input placeholder={placeholder} onChange={handleSearch} />
+      <Input
+        defaultValue={q}
+        placeholder={placeholder}
+        onChange={handleSearch}
+      />
     </div>
   )
 }
