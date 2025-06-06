@@ -30,6 +30,11 @@ export const TicketList = async ({
               sortValue: 'desc',
               label: 'Newest',
             },
+            {
+              sortKey: 'createdAt',
+              sortValue: 'asc',
+              label: 'Oldest',
+            },
           ]}
         />
       </div>

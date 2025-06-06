@@ -93,7 +93,8 @@ const TicketItem = async ({ ticket, isDetail = false }: TicketItemProps) => {
         </CardContent>
         <CardFooter className="flex items-center justify-between">
           <span className="text-muted-foreground text-sm">
-            {ticket.deadline} by {ticket.user.username}
+            {ticket.createdAt.toISOString().slice(0, 10)} by{' '}
+            {ticket.user.username}
           </span>
           <span className="text-muted-foreground text-sm">
             {toCurrentFromCent(ticket.bounty)}
