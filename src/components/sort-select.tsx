@@ -7,31 +7,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { sortOptions, sortParser } from '@/features/ticket/search-params'
-import { useQueryStates } from 'nuqs'
 
-type SortOption = {
+export type SortSelectOption = {
   sortKey: string
   sortValue: string
   label: string
 }
 
-type SortSelectProps = {
-  options: SortOption[]
+type SortObject = {
+  sortKey: string
+  sortValue: string
 }
 
-export const SortSelect = ({ options }: SortSelectProps) => {
-  const [sort, setSort] = useQueryStates(sortParser, sortOptions)
+type SortSelectProps = {
+  options: SortSelectOption[]
+  value: SortObject
+  onValueChange?: (sort: SortObject) => void
+}
 
+export const SortSelect = ({
+  options,
+  value,
+  onValueChange,
+}: SortSelectProps) => {
   const handleSearch = (compositeKey: string) => {
     const [sortKey, sortValue] = compositeKey.split('_') as [string, string]
-    setSort({ sortKey, sortValue })
+    onValueChange?.({ sortKey, sortValue })
   }
 
   return (
     <div className="w-full max-w-[420px]">
       <Select
-        defaultValue={sort.sortKey + '_' + sort.sortValue}
+        defaultValue={`${value.sortKey}_${value.sortValue}`}
         onValueChange={handleSearch}
       >
         <SelectTrigger className="w-full">
