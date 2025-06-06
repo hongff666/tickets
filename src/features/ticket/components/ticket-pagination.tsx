@@ -1,8 +1,9 @@
 'use client'
 
 import { Pagination } from '@/components/pagination'
-import { useQueryStates } from 'nuqs'
-import { paginationOptions, paginationParser } from '../search-params'
+import { useQueryState, useQueryStates } from 'nuqs'
+import { useEffect, useRef } from 'react'
+import { paginationOptions, paginationParser, qParser } from '../search-params'
 
 type TicketpaginationProps = {
   paginatedTicketMetadata: {
@@ -18,6 +19,17 @@ export const TicketPagination = ({
     paginationParser,
     paginationOptions,
   )
+
+  const [q, setQ] = useQueryState('q', qParser)
+
+  const preQ = useRef(q)
+
+  useEffect(() => {
+    if (preQ.current !== q) {
+      setPagination({ ...pagination, page: 0 })
+      preQ.current = q
+    }
+  }, [q, pagination])
 
   return (
     <Pagination
