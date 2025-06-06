@@ -16,11 +16,10 @@ type SortOption = {
 }
 
 type SortSelectProps = {
-  defaultValue: string
   options: SortOption[]
 }
 
-export const SortSelect = ({ defaultValue, options }: SortSelectProps) => {
+export const SortSelect = ({ options }: SortSelectProps) => {
   const [sort, setSort] = useQueryState('sort', sortParser)
 
   const handleSearch = (value: string) => {
@@ -29,7 +28,7 @@ export const SortSelect = ({ defaultValue, options }: SortSelectProps) => {
 
   return (
     <div className="w-full max-w-[420px]">
-      <Select defaultValue={sort || defaultValue} onValueChange={handleSearch}>
+      <Select defaultValue={sort} onValueChange={handleSearch}>
         <SelectTrigger className="w-full">
           <SelectValue />
         </SelectTrigger>

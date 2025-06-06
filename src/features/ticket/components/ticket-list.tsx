@@ -19,7 +19,6 @@ export const TicketList = async ({
       <div className="flex w-full max-w-[420px] items-center justify-between gap-x-4">
         <SearchInput placeholder="Search Input..." />
         <SortSelect
-          defaultValue="newest"
           options={[
             { label: 'Newest', value: 'newest' },
             { label: 'Bounty', value: 'bounty' },
