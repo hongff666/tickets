@@ -8,10 +8,10 @@ const getTickets = async (
   const tickets = await prisma.ticket.findMany({
     where: {
       userId,
-      title: {
-        contains: searchParams.q,
-        mode: 'insensitive',
-      },
+      ...(typeof searchParams.q === 'string' &&
+        searchParams.q.length > 0 && {
+          title: { contains: searchParams.q, mode: 'insensitive' },
+        }),
     },
     orderBy: {
       ...(searchParams.sort === 'bounty' && { bounty: 'desc' }),

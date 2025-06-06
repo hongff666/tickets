@@ -1,4 +1,4 @@
 export type SearchParams = {
-  q?: string | undefined
-  sort?: string | undefined
+  q?: string | string[] | undefined
+  sort?: string | string[] | undefined
 }
