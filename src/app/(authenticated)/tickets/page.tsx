@@ -12,12 +12,12 @@ import { searchParamsCache } from '@/features/ticket/search-params'
 import { SearchParams } from 'nuqs/server'
 
 type TicketPageProps = {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams>
 }
 
 const TicketsPage = async ({ searchParams }: TicketPageProps) => {
   const { user } = await getAuth()
-  const resolvedSearchParams = searchParamsCache.parse(searchParams)
+  const resolvedSearchParams = await searchParamsCache.parse(searchParams)
 
   return (
     <>

@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { TicketItem } from '@/features/ticket/components/ticket-item'
 import { getTicket } from '@/features/ticket/queries/get-ticket'
-import { getTickets } from '@/features/ticket/queries/get-tickets'
 import { homePath } from '@/paths'
 import { Separator } from '@radix-ui/react-separator'
 
@@ -38,13 +37,6 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
   } else {
     notFound()
   }
-}
-
-export async function generateStaticParams() {
-  const tickets = await getTickets(null)
-  return tickets.map((ticket) => ({
-    ticketId: ticket.id,
-  }))
 }
 
 export default TicketPage

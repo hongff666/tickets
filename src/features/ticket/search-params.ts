@@ -5,4 +5,6 @@ export const searchParamsCache = createSearchParamsCache({
   sort: parseAsString.withDefault(''),
 })
 
-export type ParsedSearchParams = ReturnType<typeof searchParamsCache.parse>
+export type ParsedSearchParams = Awaited<
+  ReturnType<typeof searchParamsCache.parse>
+>

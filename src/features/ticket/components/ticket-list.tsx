@@ -10,7 +10,7 @@ export const TicketList = async ({
   searchParams,
 }: {
   userId?: string
-  searchParams: Awaited<ParsedSearchParams>
+  searchParams: ParsedSearchParams
 }) => {
   const tickets = await getTickets(userId, searchParams)
 
