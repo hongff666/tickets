@@ -20,7 +20,7 @@ export const TicketPagination = ({
     paginationOptions,
   )
 
-  const [q, setQ] = useQueryState('q', qParser)
+  const [q] = useQueryState('q', qParser)
 
   const preQ = useRef(q)
 
