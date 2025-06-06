@@ -25,7 +25,7 @@ const users = [
   },
 ]
 
-export const tickets = Array.from({ length: 3 }, () => ({
+export const tickets = Array.from({ length: 15 }, () => ({
   title: `${index++}: ${faker.lorem.sentence()}`,
   createdAt: faker.date.past(),
   updatedAt: faker.date.recent(),
