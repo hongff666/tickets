@@ -2,7 +2,7 @@ import { PlaceHolder } from '@/components/placeholder'
 import { SearchInput } from '@/components/search-input'
 import { SortSelect } from '@/components/sort-select'
 import { getTickets } from '../queries/get-tickets'
-import { SearchParams } from '../search-params'
+import { ParsedSearchParams } from '../search-params'
 import { TicketItem } from './ticket-item'
 
 export const TicketList = async ({
@@ -10,7 +10,7 @@ export const TicketList = async ({
   searchParams,
 }: {
   userId?: string
-  searchParams: SearchParams
+  searchParams: Awaited<ParsedSearchParams>
 }) => {
   const tickets = await getTickets(userId, searchParams)
 

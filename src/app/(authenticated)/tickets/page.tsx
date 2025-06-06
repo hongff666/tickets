@@ -8,15 +8,16 @@ import { Spinner } from '@/components/spinner'
 import { getAuth } from '@/features/auth/actions/get-auth'
 import { TicketList } from '@/features/ticket/components/ticket-list'
 import { TicketUpsertForm } from '@/features/ticket/components/ticket-upsert-form'
-import { SearchParams } from '@/features/ticket/search-params'
+import { searchParamsCache } from '@/features/ticket/search-params'
+import { SearchParams } from 'nuqs/server'
 
 type TicketPageProps = {
-  searchParams: Promise<SearchParams>
+  searchParams: SearchParams
 }
 
 const TicketsPage = async ({ searchParams }: TicketPageProps) => {
   const { user } = await getAuth()
-  const resolvedSearchParams = await searchParams
+  const resolvedSearchParams = searchParamsCache.parse(searchParams)
 
   return (
     <>

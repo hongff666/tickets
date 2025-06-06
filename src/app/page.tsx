@@ -2,7 +2,8 @@ import { Heading } from '@/components/heading'
 import { PlaceHolder } from '@/components/placeholder'
 import { Spinner } from '@/components/spinner'
 import { TicketList } from '@/features/ticket/components/ticket-list'
-import { SearchParams } from '@/features/ticket/search-params'
+import { searchParamsCache } from '@/features/ticket/search-params'
+import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
@@ -11,7 +12,7 @@ type HomePageProps = {
 }
 
 const HomePage = async ({ searchParams }: HomePageProps) => {
-  const resolvedSearchParams = await searchParams
+  const resolvedSearchParams = await searchParamsCache.parse(searchParams)
   return (
     <div className="flex flex-1 flex-col gap-y-8">
       <Heading
