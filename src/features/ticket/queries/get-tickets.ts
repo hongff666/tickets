@@ -28,6 +28,16 @@ const getTickets = async (
       },
     },
   })
-  return tickets
+
+  const count = await prisma.ticket.count({
+    where,
+  })
+  return {
+    list: tickets,
+    metadata: {
+      count,
+      hasNextPage: count > skip + take,
+    },
+  }
 }
 export { getTickets }

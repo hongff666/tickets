@@ -8,12 +8,20 @@ type PaginationObject = {
 type PaginationProps = {
   pagination: PaginationObject
   onPagination: (pagination: PaginationObject) => void
+  paginatedMetadata: {
+    count: number
+    hasNextPage: boolean
+  }
 }
 
-export const Pagination = ({ pagination, onPagination }: PaginationProps) => {
+export const Pagination = ({
+  pagination,
+  onPagination,
+  paginatedMetadata,
+}: PaginationProps) => {
   const startOffset = pagination.page * pagination.size + 1
   const endOffset = startOffset - 1 + pagination.size
-  const label = `${startOffset} - ${endOffset} / 100`
+  const label = `${startOffset} - ${endOffset} / ${paginatedMetadata.count}`
 
   const handlePreviousPage = () => {
     onPagination({ ...pagination, page: pagination.page - 1 })
@@ -41,7 +49,7 @@ export const Pagination = ({ pagination, onPagination }: PaginationProps) => {
       <Button
         variant="outline"
         size="sm"
-        disabled={endOffset >= 100} // Assuming 100 is the total count of items
+        disabled={!paginatedMetadata.hasNextPage}
         onClick={handleNextPage}
       >
         Next

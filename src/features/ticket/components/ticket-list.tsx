@@ -13,7 +13,10 @@ export const TicketList = async ({
   userId?: string
   searchParams: ParsedSearchParams
 }) => {
-  const tickets = await getTickets(userId, searchParams)
+  const { list: tickets, metadata: ticketMetadata } = await getTickets(
+    userId,
+    searchParams,
+  )
 
   return (
     <div className="animate-fade-in-from-top flex flex-1 flex-col items-center gap-y-4">
@@ -49,7 +52,7 @@ export const TicketList = async ({
       )}
 
       <div className="w-full max-w-[420px]">
-        <TicketPagination />
+        <TicketPagination paginatedTicketMetadata={ticketMetadata} />
       </div>
     </div>
   )
