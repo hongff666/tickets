@@ -21,7 +21,7 @@ export const sortOptions = {
 
 export const paginationParser = {
   page: parseAsInteger.withDefault(0),
-  size: parseAsInteger.withDefault(3),
+  size: parseAsInteger.withDefault(10),
 }
 
 export const paginationOptions = {
