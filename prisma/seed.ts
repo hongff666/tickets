@@ -43,7 +43,7 @@ export const tickets = Array.from({ length: 15 }, () => ({
   bounty: faker.number.float({ min: 0, max: 1000 }),
 }))
 
-export const comments = Array.from({ length: 15 }, () => ({
+export const comments = Array.from({ length: 150 }, () => ({
   content: faker.lorem.sentence(),
   createdAt: faker.date.past(),
 }))
