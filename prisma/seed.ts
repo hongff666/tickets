@@ -16,12 +16,16 @@ let index = 0
 
 const users = [
   {
-    username: 'admin',
-    email: 'admin@qq.com',
+    username: 'a1',
+    email: 'a1@qq.com',
   },
   {
-    username: 'user',
-    email: 'user@qq.com',
+    username: 'a2',
+    email: 'a2@qq.com',
+  },
+  {
+    username: 'a3',
+    email: 'a3@qq.com',
   },
 ]
 
@@ -39,6 +43,11 @@ export const tickets = Array.from({ length: 15 }, () => ({
   bounty: faker.number.float({ min: 0, max: 1000 }),
 }))
 
+export const comments = Array.from({ length: 15 }, () => ({
+  content: faker.lorem.sentence(),
+  createdAt: faker.date.past(),
+}))
+
 const prisma = new PrismaClient()
 
 const passwordBytes = stringToUint8Array('admin@123')
@@ -48,6 +57,7 @@ const hashedPassword = uint8ArrayToHex(hashedPasswordBytes)
 const seed = async () => {
   const t0 = performance.now()
 
+  await prisma.comment.deleteMany()
   await prisma.ticket.deleteMany()
   await prisma.user.deleteMany()
 
@@ -59,14 +69,21 @@ const seed = async () => {
       passwordHash: hashedPassword,
     })),
   })
-  await prisma.ticket.createMany({
+  const dbTickets = await prisma.ticket.createManyAndReturn({
     data: tickets.map((ticket) => ({
       ...ticket,
-      userId: dbUsers[1].id,
+      userId: dbUsers[faker.number.int({ min: 0, max: 2 })].id,
     })),
     skipDuplicates: true,
   })
-
+  await prisma.comment.createMany({
+    data: comments.map((comment) => ({
+      ...comment,
+      userId: dbUsers[faker.number.int({ min: 0, max: 2 })].id,
+      ticketId: dbTickets[faker.number.int({ min: 0, max: 14 })].id,
+    })),
+  })
+  tickets
   const t1 = performance.now()
   console.log(`Seed completed in ${t1 - t0} milliseconds.`)
 }
