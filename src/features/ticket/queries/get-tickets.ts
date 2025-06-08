@@ -5,6 +5,8 @@ const getTickets = async (
   userId: string | undefined,
   searchParams: Awaited<ParsedSearchParams>,
 ) => {
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+
   const where = {
     userId,
     title: { contains: searchParams.q, mode: 'insensitive' as const },
