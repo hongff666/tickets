@@ -24,7 +24,7 @@ type useCustomDialogProps = {
   trigger: React.ReactElement<WithClickHandler>
 }
 
-export const useCustomdDialog = ({
+export const useCustomDialog = ({
   title = 'Confirm Action',
   description = 'Are you sure you want to proceed with this action?',
   action,

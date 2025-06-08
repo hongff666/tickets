@@ -1,6 +1,6 @@
 'use client'
 
-import { useCustomdDialog } from '@/components/custom-dialog'
+import { useCustomDialog } from '@/components/custom-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +23,7 @@ type TicketMoreMenuProps = {
 }
 
 export const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
-  const [deleteButton, deleteDialog] = useCustomdDialog({
+  const [deleteButton, deleteDialog] = useCustomDialog({
     action: deleteTicket.bind(null, ticket.id),
     trigger: (
       <DropdownMenuItem>
