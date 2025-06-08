@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import {
   LucideExternalLink,
@@ -17,8 +19,6 @@ import {
 import { ticketEditPath, ticketPath } from '@/paths'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { getAuth } from '@/features/auth/actions/get-auth'
-import { isOwner } from '@/features/auth/utils/is-owner'
 import { Comments } from '@/features/comment/components/comments'
 import { toCurrentFromCent } from '@/utils/currency'
 import { Prisma } from '@prisma/client'
@@ -35,15 +35,11 @@ type TicketItemProps = {
         }
       }
     }
-  }>
+  }> & { isOwner: boolean }
   isDetail?: boolean
 }
 
-const TicketItem = async ({ ticket, isDetail = false }: TicketItemProps) => {
-  const { user } = await getAuth()
-
-  const isTicketOwner = isOwner(user, ticket)
-
+const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
   const detailButton = (
     <Button asChild variant="outline" size="icon">
       <Link prefetch href={ticketPath(ticket.id)}>
@@ -52,7 +48,7 @@ const TicketItem = async ({ ticket, isDetail = false }: TicketItemProps) => {
     </Button>
   )
 
-  const editButton = isTicketOwner ? (
+  const editButton = ticket.isOwner ? (
     <Button asChild variant="outline" size="icon">
       <Link prefetch href={ticketEditPath(ticket.id)}>
         <LucidePencil className="h-4 w-4" />
@@ -60,7 +56,7 @@ const TicketItem = async ({ ticket, isDetail = false }: TicketItemProps) => {
     </Button>
   ) : null
 
-  const moreMenu = isTicketOwner ? (
+  const moreMenu = ticket.isOwner ? (
     <TicketMoreMenu
       ticket={ticket}
       trigger={
