@@ -22,7 +22,6 @@ export const CreateCommentForm = ({ ticketId }: CreateCommentFormProps) => {
       <Textarea
         name="content"
         placeholder="Write your comment here..."
-        required
         className="w-full"
       />
       <FieldError name="content" actionState={actionState} />
