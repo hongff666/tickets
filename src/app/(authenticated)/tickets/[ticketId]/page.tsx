@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 
 import { Breadcrumbs } from '@/components/breadcrumbs'
+import { getComments } from '@/features/comment/queries/get-comments'
 import { TicketItem } from '@/features/ticket/components/ticket-item'
 import { getTicket } from '@/features/ticket/queries/get-ticket'
 import { homePath } from '@/paths'
@@ -15,7 +16,11 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
   const ticketId = (await params).ticketId
 
   // 根据ticketId获取ticket数据
-  const ticket = await getTicket(ticketId)
+  const ticketPromise = await getTicket(ticketId)
+
+  const commentsPromise = await getComments(ticketId)
+
+  const [ticket, comments] = await Promise.all([ticketPromise, commentsPromise])
 
   if (ticket) {
     return (
@@ -30,7 +35,7 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
         <Separator className="border" />
 
         <div className="animate-fade-in-from-top flex flex-col items-center">
-          <TicketItem ticket={ticket} isDetail />
+          <TicketItem ticket={ticket} isDetail comments={comments} />
         </div>
       </div>
     )

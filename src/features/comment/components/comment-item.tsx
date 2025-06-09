@@ -1,5 +1,3 @@
-'use server'
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 import { CommentWithMetadata } from '../types'
@@ -9,7 +7,7 @@ type CommentItemProps = {
   buttons?: Array<React.ReactNode>
 }
 
-export const CommentItem = async ({ comment, buttons }: CommentItemProps) => {
+export const CommentItem = ({ comment, buttons }: CommentItemProps) => {
   return (
     <div className="flex gap-x-2">
       <Card className="flex-1">

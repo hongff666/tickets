@@ -20,6 +20,7 @@ import { ticketEditPath, ticketPath } from '@/paths'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Comments } from '@/features/comment/components/comments'
+import { CommentWithMetadata } from '@/features/comment/types'
 import { toCurrentFromCent } from '@/utils/currency'
 import { Prisma } from '@prisma/client'
 import { Suspense } from 'react'
@@ -37,9 +38,14 @@ type TicketItemProps = {
     }
   }> & { isOwner: boolean }
   isDetail?: boolean
+  comments: CommentWithMetadata[]
 }
 
-const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
+const TicketItem = ({
+  ticket,
+  isDetail = false,
+  comments,
+}: TicketItemProps) => {
   const detailButton = (
     <Button asChild variant="outline" size="icon">
       <Link prefetch href={ticketPath(ticket.id)}>
@@ -129,7 +135,7 @@ const TicketItem = ({ ticket, isDetail = false }: TicketItemProps) => {
               </div>
             }
           >
-            <Comments ticketId={ticket.id} />
+            <Comments ticketId={ticket.id} comments={comments} />
           </Suspense>
         ) : null}
       </div>
