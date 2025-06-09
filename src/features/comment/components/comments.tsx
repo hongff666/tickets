@@ -33,13 +33,23 @@ export const Comments = ({ ticketId, paginatedComments }: CommentsProps) => {
   const handleDeleteComment = (id: string) => {
     setComments((prevComments) => prevComments.filter((c) => c.id !== id))
   }
+
+  const handleCreateComment = (newComment: CommentWithMetadata) => {
+    setComments((prevComments) => [newComment, ...prevComments])
+  }
+
   return (
     <>
       <CardCompact
         title="Create Comment"
         description="Share your thoughts or feedback on this ticket."
         className="mb-4"
-        content={<CreateCommentForm ticketId={ticketId} />}
+        content={
+          <CreateCommentForm
+            ticketId={ticketId}
+            onCreateComment={handleCreateComment}
+          />
+        }
       />
 
       <div className="ml-10 flex flex-col gap-y-2">
