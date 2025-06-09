@@ -23,6 +23,7 @@ import { Comments } from '@/features/comment/components/comments'
 import { CommentWithMetadata } from '@/features/comment/types'
 import { toCurrentFromCent } from '@/utils/currency'
 import { Prisma } from '@prisma/client'
+import { format } from 'date-fns'
 import { Suspense } from 'react'
 import { TICKET_ICONS } from '../constants'
 import { TicketMoreMenu } from './ticket-more-menu'
@@ -99,7 +100,7 @@ const TicketItem = ({
           </CardContent>
           <CardFooter className="flex items-center justify-between">
             <span className="text-muted-foreground text-sm">
-              {ticket.createdAt.toISOString().slice(0, 10)} by{' '}
+              {format(new Date(ticket.createdAt), 'yyyy-MM-dd HH:mm:ss')}
               {ticket.user.username}
             </span>
             <span className="text-muted-foreground text-sm">

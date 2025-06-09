@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { format } from 'date-fns'
 import React from 'react'
 import { CommentWithMetadata } from '../types'
 
@@ -17,15 +18,7 @@ export const CommentItem = ({ comment, buttons }: CommentItemProps) => {
               {comment.user?.username}
             </span>
             <span className="text-muted-foreground">
-              {new Date(comment.createdAt).toLocaleString('zh-CN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false,
-              })}
+              {format(new Date(comment.createdAt), 'yyyy-MM-dd HH:mm:ss')}
             </span>
           </CardTitle>
         </CardHeader>
