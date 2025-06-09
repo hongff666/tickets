@@ -10,7 +10,7 @@ type CommentsProps = {
   ticketId: string
   comments?: CommentWithMetadata[]
 }
-export const Comments = ({ ticketId, comments }: CommentsProps) => {
+export const Comments = ({ ticketId, comments = [] }: CommentsProps) => {
   return (
     <>
       <CardCompact
@@ -21,7 +21,7 @@ export const Comments = ({ ticketId, comments }: CommentsProps) => {
       />
 
       <div className="ml-10 flex flex-col gap-y-2">
-        {comments?.map((comment) => (
+        {comments.map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
