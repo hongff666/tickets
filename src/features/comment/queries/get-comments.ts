@@ -4,26 +4,45 @@ import { getAuth } from '@/features/auth/actions/get-auth'
 import { isOwner } from '@/features/auth/utils/is-owner'
 import { prisma } from '@/lib/prisma'
 
-export const getComments = async (ticketId: string) => {
+export const getComments = async (ticketId: string, offset?: number) => {
   const { user } = await getAuth()
 
-  const comments = await prisma.comment.findMany({
-    where: {
-      ticketId,
-    },
-    include: {
-      user: {
-        select: {
-          username: true,
+  const skip = offset ?? 0
+  const take = 2
+
+  const [comments, count] = await prisma.$transaction([
+    prisma.comment.findMany({
+      where: {
+        ticketId,
+      },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
         },
       },
+      skip,
+      take,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    }),
+    prisma.comment.count({
+      where: {
+        ticketId,
+      },
+    }),
+  ])
+
+  return {
+    list: comments.map((comment) => ({
+      ...comment,
+      isOwner: isOwner(user, comment),
+    })),
+    metadata: {
+      count,
+      hasNextPage: count > skip + take,
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  })
-  return comments.map((comment) => ({
-    ...comment,
-    isOwner: isOwner(user, comment),
-  }))
+  }
 }

@@ -13,15 +13,13 @@ type TicketPagePropsType = {
 }
 
 const TicketPage = async ({ params }: TicketPagePropsType) => {
-  // 获取ticketId参数
   const ticketId = (await params).ticketId
-
-  // 根据ticketId获取ticket数据
   const ticketPromise = await getTicket(ticketId)
-
   const commentsPromise = await getComments(ticketId)
-
-  const [ticket, comments] = await Promise.all([ticketPromise, commentsPromise])
+  const [ticket, paginatedComments] = await Promise.all([
+    ticketPromise,
+    commentsPromise,
+  ])
 
   if (ticket) {
     return (
@@ -39,7 +37,12 @@ const TicketPage = async ({ params }: TicketPagePropsType) => {
           <TicketItem
             ticket={ticket}
             isDetail
-            comments={<Comments ticketId={ticket.id} comments={comments} />}
+            comments={
+              <Comments
+                ticketId={ticket.id}
+                paginatedComments={paginatedComments}
+              />
+            }
           />
         </div>
       </div>

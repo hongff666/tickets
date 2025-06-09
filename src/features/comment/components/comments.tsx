@@ -1,4 +1,9 @@
+'use client'
+
 import { CardCompact } from '@/components/card-compact'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { getComments } from '../queries/get-comments'
 import { CommentWithMetadata } from '../types'
 import { CommentDeleteButton } from './comment-delete-button'
 import { CommentItem } from './comment-item'
@@ -6,9 +11,24 @@ import { CreateCommentForm } from './create-comment-form'
 
 type CommentsProps = {
   ticketId: string
-  comments?: CommentWithMetadata[]
+  paginatedComments: {
+    list: CommentWithMetadata[]
+    metadata: {
+      count: number
+      hasNextPage: boolean
+    }
+  }
 }
-export const Comments = ({ ticketId, comments = [] }: CommentsProps) => {
+export const Comments = ({ ticketId, paginatedComments }: CommentsProps) => {
+  const [comments, setComments] = useState(paginatedComments.list || [])
+  const [metadata, setMetadata] = useState(paginatedComments.metadata)
+
+  const handleMore = async () => {
+    const morePaginatedComments = await getComments(ticketId, comments.length)
+    const moreComments = morePaginatedComments.list || []
+    setComments((prevComments) => [...prevComments, ...moreComments])
+    setMetadata(morePaginatedComments.metadata)
+  }
   return (
     <>
       <CardCompact
@@ -31,6 +51,14 @@ export const Comments = ({ ticketId, comments = [] }: CommentsProps) => {
           />
         ))}
       </div>
+
+      {metadata.hasNextPage && (
+        <div className="ml-8 mt-4 flex flex-col justify-center">
+          <Button variant="ghost" onClick={handleMore}>
+            Load More
+          </Button>
+        </div>
+      )}
     </>
   )
 }
