@@ -38,7 +38,7 @@ type TicketItemProps = {
     }
   }> & { isOwner: boolean }
   isDetail?: boolean
-  comments: CommentWithMetadata[]
+  comments?: CommentWithMetadata[]
 }
 
 const TicketItem = ({

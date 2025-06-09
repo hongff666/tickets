@@ -8,7 +8,7 @@ import { CreateCommentForm } from './create-comment-form'
 
 type CommentsProps = {
   ticketId: string
-  comments: CommentWithMetadata[]
+  comments?: CommentWithMetadata[]
 }
 export const Comments = ({ ticketId, comments }: CommentsProps) => {
   return (
@@ -21,7 +21,7 @@ export const Comments = ({ ticketId, comments }: CommentsProps) => {
       />
 
       <div className="ml-10 flex flex-col gap-y-2">
-        {comments.map((comment) => (
+        {comments?.map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
