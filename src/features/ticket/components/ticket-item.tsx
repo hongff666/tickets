@@ -18,13 +18,9 @@ import {
 } from '@/components/ui/card'
 import { ticketEditPath, ticketPath } from '@/paths'
 
-import { Skeleton } from '@/components/ui/skeleton'
-import { Comments } from '@/features/comment/components/comments'
-import { CommentWithMetadata } from '@/features/comment/types'
 import { toCurrentFromCent } from '@/utils/currency'
 import { Prisma } from '@prisma/client'
 import { format } from 'date-fns'
-import { Suspense } from 'react'
 import { TICKET_ICONS } from '../constants'
 import { TicketMoreMenu } from './ticket-more-menu'
 
@@ -39,7 +35,7 @@ type TicketItemProps = {
     }
   }> & { isOwner: boolean }
   isDetail?: boolean
-  comments?: CommentWithMetadata[]
+  comments?: React.ReactNode
 }
 
 const TicketItem = ({
@@ -125,21 +121,7 @@ const TicketItem = ({
         </div>
       </div>
 
-      <div>
-        {isDetail ? (
-          <Suspense
-            fallback={
-              <div className="flex flex-col gap-y-2">
-                <Skeleton className="h-[250px] w-full" />
-                <Skeleton className="ml-8 h-[80px] w-full" />
-                <Skeleton className="ml-8 h-[80px] w-full" />
-              </div>
-            }
-          >
-            <Comments ticketId={ticket.id} comments={comments} />
-          </Suspense>
-        ) : null}
-      </div>
+      <div>{comments}</div>
     </div>
   )
 }

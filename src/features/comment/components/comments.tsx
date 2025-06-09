@@ -1,5 +1,3 @@
-'use client'
-
 import { CardCompact } from '@/components/card-compact'
 import { CommentWithMetadata } from '../types'
 import { CommentDeleteButton } from './comment-delete-button'
