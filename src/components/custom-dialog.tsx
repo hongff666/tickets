@@ -24,6 +24,7 @@ type useCustomDialogProps = {
   description?: string
   action: () => Promise<ActionState>
   trigger: React.ReactElement<WithClickHandler>
+  onSuccess?: (actionState: ActionState) => void
 }
 
 export const useCustomDialog = ({
@@ -31,6 +32,7 @@ export const useCustomDialog = ({
   description = 'Are you sure you want to proceed with this action?',
   action,
   trigger,
+  onSuccess,
 }: useCustomDialogProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -55,7 +57,10 @@ export const useCustomDialog = ({
             <Form
               action={formAction}
               actionState={actionState}
-              onSuccess={() => setIsOpen(false)}
+              onSuccess={(actionState) => {
+                setIsOpen(false)
+                onSuccess?.(actionState)
+              }}
             >
               <SubmitButton label="confirm" />
             </Form>
