@@ -26,9 +26,11 @@ export const CreateCommentForm = ({
     EMPTY_ACTION_SATE,
   )
 
-  const handleSuccessEvent = (actionState: ActionState) => {
+  const handleSuccessEvent = (
+    actionState: ActionState<CommentWithMetadata>,
+  ) => {
     if (actionState.data) {
-      onCreateComment?.(actionState.data as CommentWithMetadata)
+      onCreateComment?.(actionState.data)
     }
   }
 
