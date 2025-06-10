@@ -37,8 +37,9 @@ function formatQuery(query: string, paramsJson: string): string {
 }
 
 ;(prisma as any).$on('query', (e: any) => {
+  const timestamp = new Date().toISOString()
   const formatted = formatQuery(e.query, e.params)
-  console.log(`Query: ${formatted} - Duration: ${e.duration}ms`)
+  console.log(`======: ${timestamp} - ${formatted} - Duration: ${e.duration}ms`)
 })
 
 if (process.env.NODE_ENV !== 'production') {
