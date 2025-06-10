@@ -1,3 +1,4 @@
+import { PaginatedData } from '@/types/pagination'
 import { Button } from './ui/button'
 import {
   Select,
@@ -15,10 +16,7 @@ type PaginationObject = {
 type PaginationProps = {
   pagination: PaginationObject
   onPagination: (pagination: PaginationObject) => void
-  paginatedMetadata: {
-    count: number
-    hasNextPage: boolean
-  }
+  paginatedMetadata: PaginatedData<unknown>['metadata']
 }
 
 export const Pagination = ({

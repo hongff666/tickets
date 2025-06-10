@@ -19,21 +19,13 @@ import {
 import { ticketEditPath, ticketPath } from '@/paths'
 
 import { toCurrentFromCent } from '@/utils/currency'
-import { Prisma } from '@prisma/client'
 import { format } from 'date-fns'
 import { TICKET_ICONS } from '../constants'
+import { TicketWithMetadata } from '../types'
 import { TicketMoreMenu } from './ticket-more-menu'
 
 type TicketItemProps = {
-  ticket: Prisma.TicketGetPayload<{
-    include: {
-      user: {
-        select: {
-          username: true
-        }
-      }
-    }
-  }> & { isOwner: boolean }
+  ticket: TicketWithMetadata
   isDetail?: boolean
   comments?: React.ReactNode
 }
