@@ -28,7 +28,7 @@ export const TicketPagination = ({
       setPagination({ ...pagination, page: 0 })
       preQ.current = q
     }
-  }, [q, pagination])
+  }, [q, pagination, setPagination])
 
   return (
     <Pagination

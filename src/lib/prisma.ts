@@ -16,10 +16,12 @@ const prisma =
   })
 
 function formatQuery(query: string, paramsJson: string): string {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let params: any[]
 
   try {
     params = JSON.parse(paramsJson)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return query + ' /* Failed to parse params */'
   }
@@ -36,6 +38,7 @@ function formatQuery(query: string, paramsJson: string): string {
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ;(prisma as any).$on('query', (e: any) => {
   const timestamp = new Date().toISOString()
   const formatted = formatQuery(e.query, e.params)

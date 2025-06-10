@@ -25,7 +25,7 @@ export const CommentDeleteButton = ({
         )}
       </Button>
     ),
-    onSuccess: (_actionState) => onDeleteComment?.(id),
+    onSuccess: () => onDeleteComment?.(id),
   })
   return (
     <>
