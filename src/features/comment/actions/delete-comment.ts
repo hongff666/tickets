@@ -10,8 +10,6 @@ import { ticketPath } from '@/paths'
 import { revalidatePath } from 'next/cache'
 
 export const deleteComment = async (id: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 3000)) // Simulate a delay
-
   const { user } = await getAuthOrRedirect()
 
   const comment = await prisma.comment.findUnique({

@@ -26,11 +26,15 @@ interface WithClickHandler {
   onClick?: (e: React.MouseEvent) => void
 }
 
+type TriggerRender =
+  | React.ReactElement<WithClickHandler>
+  | ((props: { isPending: boolean }) => React.ReactElement<WithClickHandler>)
+
 type useCustomDialogProps = {
   title?: string
   description?: string
   action: () => Promise<ActionState>
-  trigger: React.ReactElement<WithClickHandler>
+  trigger: TriggerRender
   onSuccess?: (actionState: ActionState) => void
 }
 
@@ -42,7 +46,6 @@ export const useCustomDialog = ({
   onSuccess,
 }: useCustomDialogProps) => {
   const [isOpen, setIsOpen] = useState(false)
-
   const [actionState, formAction, isPending] = useActionState(
     action,
     EMPTY_ACTION_SATE,
@@ -65,7 +68,10 @@ export const useCustomDialog = ({
     }
   }, [isPending])
 
-  const dialogTrigger = cloneElement(trigger, {
+  const triggerElement =
+    typeof trigger === 'function' ? trigger({ isPending }) : trigger
+
+  const dialogTrigger = cloneElement(triggerElement, {
     onClick: () => {
       setIsOpen((state) => !state)
     },
@@ -104,5 +110,5 @@ export const useCustomDialog = ({
       </AlertDialogContent>
     </AlertDialog>
   )
-  return [dialogTrigger, dialog]
+  return [dialogTrigger, dialog, isPending]
 }

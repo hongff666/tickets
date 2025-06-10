@@ -13,8 +13,6 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export const deleteTicket = async (ticketId: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 3000)) // Simulate a delay
-
   const { user } = await getAuthOrRedirect()
 
   // 权限校验：检查用户是否是该票据的所有者
