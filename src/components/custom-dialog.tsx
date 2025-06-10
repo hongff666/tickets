@@ -53,7 +53,15 @@ export const useCustomDialog = ({
     if (isPending) {
       toastRef.current = toast.loading('Deleting ...')
     } else {
-      toast.dismiss(toastRef.current)
+      if (toastRef.current) {
+        toast.dismiss(toastRef.current)
+      }
+    }
+
+    return () => {
+      if (toastRef.current) {
+        toast.dismiss(toastRef.current)
+      }
     }
   }, [isPending])
 
